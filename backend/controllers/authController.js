@@ -44,13 +44,12 @@ exports.logIn = async (req,res) => {
 //find the user by their email
 const user = await getUserByEmail(email)
 if(!user) {
-    return res.status(400).json({message: "Invalid email or password"})
+    return res.status(400).json({message: "User does not exist"})
 }
-
 //Compare the password with the stored hash
 const passwordsMatch = await bcrypt.compare(password, user.password)
 if(!passwordsMatch) {
-    return res.status(400).json({message: "Invalid email or password"})
+    return res.status(400).json({message: "Invalid password"})
 }
 
 //Generate JWT token

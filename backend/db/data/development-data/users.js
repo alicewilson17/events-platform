@@ -4,35 +4,35 @@ module.exports = [
       last_name: 'Wilson',
       email: 'alice.wilson@example.com',
       password: 'password123', // hash this in real scenario
-      is_admin: true
+      role: 'admin'
     },
     {
       first_name: 'Jessica',
       last_name: 'Brown',
       email: 'jessica.brown@example.com',
       password: 'password123', // hash this in real scenario
-      is_admin: false
+            role: 'admin'
     },
     {
       first_name: 'Olivia',
       last_name: 'Smith',
       email: 'olivia.smith@example.com',
       password: 'password123', // hash this in real scenario
-      is_admin: false
+            role: 'user'
     },
     {
       first_name: 'Sophia',
       last_name: 'Johnson',
       email: 'sophia.johnson@example.com',
       password: 'password123', // hash this in real scenario
-      is_admin: false
+            role: 'user'
     },
     {
       first_name: 'Emily',
       last_name: 'Davis',
       email: 'emily.davis@example.com',
       password: 'password123', // hash this in real scenario
-      is_admin: false
+            role: 'user'
     }
   ];
   

@@ -16,7 +16,7 @@ module.exports = [
         location: 'London, UK',
         price: 5.00,
         is_paid: true,
-        created_by: 2,
+        created_by: 1,
           img: 'https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg'
       },
       {
