@@ -4,9 +4,29 @@ const seed = require("../db/seeds/seeds");
 const data = require("../db/data/test-data");
 const db = require("../db/db");
 
-beforeEach(() => {
-    return seed(data);
-  });
+let userToken
+let adminToken
+
+beforeEach(async () => {
+    await seed(data)
+    //create a non-admin user and log in to get the token
+    // const userLoginResponse = await request(app)
+    // .post('/api/auth/login')
+    // .send({email: 'rachel.brown@example.com', password: 'password123'})
+
+    // userToken = userLoginResponse.body.token
+
+    // //create an admin user and log in to get the token
+    // const adminLoginResponse = await request(app)
+    // .post('/api/auth/login')
+    // .send({email: 'sophie.johnson@example.com', password: 'password123'})
+
+    // adminToken = adminLoginResponse.body.token
+
+    // console.log('user token:', userToken)
+    // console.log('admin token:', adminToken)
+})
+
   afterAll(() => {
     db.end();
   });
@@ -36,7 +56,7 @@ describe('POST /api/auth/login', () => {
         const response = await request(app)
         .post('/api/auth/login')
         .send(userDetails)
-console.log(response)
+
 
         expect(response.status).toBe(200);
         expect(response.body.user).toHaveProperty('email', 'bob@bob.com')
@@ -90,3 +110,40 @@ describe('GET /api/events/', () => {
             })
         });
     });
+
+    describe('POST /api/events', () => {
+        test('should create a new event if the user is an admin', async () => {
+            const testEvent = {
+                title: 'TDD for women',
+                description: 'A webinar about TDD for women.',
+                date: '2024-11-05 10:00:00',
+                location: 'Online Webinar',
+                price: 0.00,
+                is_paid: false,
+                img: 'https://images.pexels.com/photos/3861951/pexels-photo-3861951.jpeg'
+            }
+           const adminLoginResponse = await request(app)
+            .post("/api/auth/login")
+            .send({email: 'sophie.johnson@example.com', password: 'password123'})
+            adminToken = adminLoginResponse.body.token
+
+
+          const response = await request(app)
+            .post("/api/events")
+            .set('Authorization', `Bearer ${adminToken}`)
+            .send(testEvent)
+
+            console.log(response.body, 'response body')
+            
+            expect(response.status).toBe(201)
+          expect(response.body.event).toMatchObject({
+                title: 'TDD for women',
+                description: 'A webinar about TDD for women.',
+                date: '2024-11-05T10:00:00.000Z',
+                location: 'Online Webinar',
+                price: "0.00",
+                is_paid: false,
+                created_by: 2,
+                img: 'https://images.pexels.com/photos/3861951/pexels-photo-3861951.jpeg'})
+              })
+            });

@@ -1,4 +1,5 @@
 const db = require('../db');
+const bcrypt = require('bcrypt')
 
 const seedDatabase = async ({eventsData, usersData}) => {
     try {
@@ -35,12 +36,14 @@ const seedDatabase = async ({eventsData, usersData}) => {
       await db.query('DELETE FROM events;');
       await db.query('DELETE FROM users;');
 
+
       //insert new data
-        await Promise.all(usersData.map(user => {
+        await Promise.all(usersData.map(async user => {
+            const hashedPassword = await bcrypt.hash(user.password, 10)
             return db.query(`
                 INSERT INTO users (first_name, last_name, email, password, role)
                 VALUES ($1, $2, $3, $4, $5) RETURNING *;`, 
-                [user.first_name, user.last_name, user.email, user.password, user.role]);
+                [user.first_name, user.last_name, user.email, hashedPassword, user.role]);
         }));
 
         await Promise.all(eventsData.map(event => {

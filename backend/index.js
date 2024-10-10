@@ -1,4 +1,5 @@
 const express = require("express")
+const {swaggerDocs, swaggerUi} = require("./utils/swagger")
 const cors = require("cors")
 const db = require("./db/db")
 const authRoutes = require('./routes/authRoutes')
@@ -7,6 +8,9 @@ const { handleCustomErrors, handleInvalidEndpoint, handlePSQLErrors, handleServe
 
 const app = express()
 const PORT = process.env.PORT || 5001
+
+// Serve the Swagger documentation at /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json())
 app.use(cors())
@@ -36,6 +40,8 @@ catch(err) {
     console.log(err)
 }});
 
-app.listen(PORT, () => {console.log(`Server is running on port ${PORT}`)})
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
+    console.log(`Swagger docs available at ${PORT}/api-docs`)})
 
 module.exports = app
