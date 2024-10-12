@@ -10,7 +10,7 @@ try {
     //check if user already exists
 const existingUser = await getUserByEmail(email)
 if (existingUser) {
-    return res.status(400).json({message: 'User already exists'})
+    return res.status(400).json({msg: 'User already exists'})
 }
 
 //hash the password
@@ -23,7 +23,7 @@ const newUser = await createUser(first_name, last_name, email, hashedPassword, r
 
 res.status(201).json({
     user: {
-        id: newUser.id,
+        user_id: newUser.user_id,
         first_name: newUser.first_name,
         last_name: newUser.last_name,
         email: newUser.email,
@@ -33,7 +33,7 @@ res.status(201).json({
 }
 catch (error){
 console.error(error)
-res.status(500).json({message: 'server error'})
+res.status(500).json({msg: 'server error'})
 }
 }
 
@@ -44,16 +44,16 @@ exports.logIn = async (req,res) => {
 //find the user by their email
 const user = await getUserByEmail(email)
 if(!user) {
-    return res.status(400).json({message: "Invalid credentials."})
+    return res.status(400).json({msg: "Invalid credentials."})
 }
 //Compare the password with the stored hash
 const passwordsMatch = await bcrypt.compare(password, user.password)
 if(!passwordsMatch) {
-    return res.status(400).json({message: "Invalid credentials."})
+    return res.status(400).json({msg: "Invalid credentials."})
 }
 
 //Generate JWT token
-const token = jwt.sign({ userId: user.id, role: user.role}, // payload
+const token = jwt.sign({ userId: user.user_id, role: user.role}, // payload
     process.env.JWT_SECRET, //secure secret key, from env variable
     {expiresIn: '1h'} // token expiration time)
 )
@@ -62,7 +62,7 @@ const token = jwt.sign({ userId: user.id, role: user.role}, // payload
 res.status(200).json({
     token,
     user: {
-        id: user.id,
+        user_id: user.user_id,
         email: user.email,
         role: user.role
     }
@@ -70,6 +70,6 @@ res.status(200).json({
     }
     catch (error){
         console.error(error)
-        res.status(500).json({message: 'server error'})
+        res.status(500).json({msg: 'server error'})
         }
 }

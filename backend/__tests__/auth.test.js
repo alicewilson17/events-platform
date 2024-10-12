@@ -9,22 +9,19 @@ let adminToken
 
 beforeEach(async () => {
     await seed(data)
-    //create a non-admin user and log in to get the token
-    // const userLoginResponse = await request(app)
-    // .post('/api/auth/login')
-    // .send({email: 'rachel.brown@example.com', password: 'password123'})
+    //log in a non-admin user to get the token
+    const userLoginResponse = await request(app)
+    .post('/api/auth/login')
+    .send({email: 'rachel.brown@example.com', password: 'password123'})
 
-    // userToken = userLoginResponse.body.token
+    userToken = userLoginResponse.body.token
 
-    // //create an admin user and log in to get the token
-    // const adminLoginResponse = await request(app)
-    // .post('/api/auth/login')
-    // .send({email: 'sophie.johnson@example.com', password: 'password123'})
+    // log in an admin user to get the token
+    const adminLoginResponse = await request(app)
+    .post('/api/auth/login')
+    .send({email: 'sophie.johnson@example.com', password: 'password123'})
 
-    // adminToken = adminLoginResponse.body.token
-
-    // console.log('user token:', userToken)
-    // console.log('admin token:', adminToken)
+    adminToken = adminLoginResponse.body.token
 })
 
   afterAll(() => {
@@ -75,7 +72,7 @@ describe('GET /api/events/', () => {
             expect(events.length).toBe(3);
            events.forEach((event) => {
               expect(event).toMatchObject({
-               id: expect.any(Number),
+               event_id: expect.any(Number),
                 title: expect.any(String),
                 description: expect.any(String),
                 date: expect.any(String),
@@ -122,18 +119,11 @@ describe('GET /api/events/', () => {
                 is_paid: false,
                 img: 'https://images.pexels.com/photos/3861951/pexels-photo-3861951.jpeg'
             }
-           const adminLoginResponse = await request(app)
-            .post("/api/auth/login")
-            .send({email: 'sophie.johnson@example.com', password: 'password123'})
-            adminToken = adminLoginResponse.body.token
-
 
           const response = await request(app)
             .post("/api/events")
             .set('Authorization', `Bearer ${adminToken}`)
             .send(testEvent)
-
-            console.log(response.body, 'response body')
             
             expect(response.status).toBe(201)
           expect(response.body.event).toMatchObject({
@@ -143,7 +133,27 @@ describe('GET /api/events/', () => {
                 location: 'Online Webinar',
                 price: "0.00",
                 is_paid: false,
-                created_by: 2,
+                created_by: 1,
                 img: 'https://images.pexels.com/photos/3861951/pexels-photo-3861951.jpeg'})
               })
+        test('should throw 403 error if user is not an admin', async () => {
+                const testEvent = {
+                    title: 'TDD for women',
+                    description: 'A webinar about TDD for women.',
+                    date: '2024-11-05 10:00:00',
+                    location: 'Online Webinar',
+                    price: 0.00,
+                    is_paid: false,
+                    img: 'https://images.pexels.com/photos/3861951/pexels-photo-3861951.jpeg'
+                }
+    
+              const response = await request(app)
+                .post("/api/events")
+                .set('Authorization', `Bearer ${userToken}`)
+                .send(testEvent)
+                
+                expect(response.status).toBe(403)
+              expect(response.body.msg).toBe("Access denied. Admins only.")
+                  })
             });
+            

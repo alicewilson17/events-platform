@@ -2,8 +2,8 @@ const db = require('../db/db')
 
 
 
-exports.fetchEventById = async(id) => {
-    const res = await db.query('SELECT * FROM events WHERE id = $1', [id])
+exports.fetchEventById = async(event_id) => {
+    const res = await db.query('SELECT * FROM events WHERE event_id = $1', [event_id])
     if (res.rows.length === 0) {
         return Promise.reject({ status: 404, msg: "Event not found" });
            }
@@ -18,7 +18,6 @@ exports.selectAllEvents = async() => {
 
 exports.createEvent= async(newEventData) => {
     const {title, description, date, location, price, is_paid, created_by, img} = newEventData
-    console.log(created_by)
     const res = await db.query(`INSERT INTO events (title, description, date, location, price, is_paid, created_by, img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`, [title, description, date, location, price, is_paid, created_by, img])
     return res.rows[0]
 }

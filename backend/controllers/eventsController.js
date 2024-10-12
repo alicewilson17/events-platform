@@ -12,9 +12,9 @@ exports.getAllEvents = async(req,res,next) => {
 }
 //get event by id
 exports.getEventById = async (req,res,next) => {
-const {id} = req.params
+const {event_id} = req.params
 try {
-    const event = await fetchEventById(id)
+    const event = await fetchEventById(event_id)
 res.status(200).send({event})
 }
 catch(error){
@@ -26,8 +26,18 @@ catch(error){
 
 //post new event (admin only)
 exports.postEvent = async (req,res,next) => {
-    console.log(req.user, "req user")
     const {title, description, date, location, price, is_paid, img} = req.body
+    
+     // Check if the user is an admin
+     if (!req.user || req.user.role !== 'admin') {
+       return res.status(403).json({msg: 'Access denied. Admins only.'})
+    }
+
+    // Check for required fields
+    if (!title || !description || !date || !location || price === undefined || is_paid === undefined || !img) {
+         return res.status(400).json({msg: 'All fields are required.' }); // Custom error for missing fields
+    }
+    
     const created_by = req.user.userId //the id of the logged in user
     try {
        
