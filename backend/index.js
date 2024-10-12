@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5001
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 //log in and sign up routes
 app.use('/api/auth', authRoutes);  // Auth-related routes
