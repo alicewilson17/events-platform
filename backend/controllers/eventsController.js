@@ -1,5 +1,6 @@
 
-const {fetchEventById, selectAllEvents, createEvent} = require('../models/eventModel')
+const users = require('../db/data/test-data/users')
+const {fetchEventById, selectAllEvents, createEvent, signUpToEvent, checkIfSignupExists} = require('../models/eventModel')
 //get all events
 exports.getAllEvents = async(req,res,next) => {
     try {
@@ -21,8 +22,6 @@ catch(error){
    next(error)
 }}
 
-
-//sign up to an event (users only)
 
 //post new event (admin only)
 exports.postEvent = async (req,res,next) => {
@@ -51,3 +50,31 @@ exports.postEvent = async (req,res,next) => {
 //update event (admin only)
 
 //delete event (admin only)
+
+//sign up to an event (users only)
+
+exports.postSignUpToEvent = async (req,res,next) => {
+    const eventId = req.params.event_id
+    const userId = req.user.userId
+try {
+
+
+    //check that event exists
+    await fetchEventById(eventId)
+    
+    
+        // check if user is already signed up to this event
+    const existingSignup = await checkIfSignupExists(userId, eventId)
+    if(existingSignup.rowCount>0) {
+        return res.status(400).json({msg: 'You are already signed up for this event.'})
+    }
+    
+    //insert new signup
+    await signUpToEvent(userId, eventId)
+    res.status(201).send({msg: `Successfully signed up user ${userId} to event ${eventId}`})
+
+}
+catch(error) {
+    next(error)
+}
+}

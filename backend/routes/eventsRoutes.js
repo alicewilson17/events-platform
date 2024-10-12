@@ -3,6 +3,7 @@ const {
   getEventById,
   getAllEvents,
   postEvent,
+  postSignUpToEvent,
 } = require("../controllers/eventsController");
 const { adminOnly, verifyToken } = require("../middleware/authMiddleware");
 
@@ -49,6 +50,68 @@ router.get("/:event_id", getEventById);
  *                type: string
  */
 router.get("/", getAllEvents);
+
+
+//sign up to event (users only)
+
+/**
+ * @swagger
+ * /api/events/{event_id}/signup:
+ *   post:
+ *     summary: Sign up to an event
+ *     tags: 
+ *       - Events
+ *     parameters:
+ *       - name: event_id
+ *         in: path
+ *         required: true
+ *         description: The event ID
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - user_id
+ *               - event_id
+ *             properties:
+ *               user_id:
+ *                 type: integer
+ *                 example: 1
+ *               event_id:
+ *                 type: integer
+ *                 example: 1
+ *               created_at:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2024-11-05T10:00:00.000Z"
+ *     responses:
+ *       201:
+ *         description: Event sign up successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Event sign up successful"
+ *       400:
+ *         description: User already signed up to this event
+ *       404:
+ *         description: Event not found
+ *       401:
+ *         description: Unauthorised
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/:event_id/signup', verifyToken, postSignUpToEvent)
+
+
+
 
 //admin-only routes
 
@@ -120,5 +183,8 @@ router.get("/", getAllEvents);
  */
 
 router.post('/', verifyToken, adminOnly, postEvent)
+
+
+
 
 module.exports = router;

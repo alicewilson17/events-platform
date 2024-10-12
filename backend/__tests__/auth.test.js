@@ -157,3 +157,43 @@ describe('GET /api/events/', () => {
                   })
             });
             
+//sign up to event
+describe('POST /api/events/:event_id/signup', () => {
+    test('should return new signup and 201 if user successfully signs up to an event', async () => {
+        const response = await request(app)
+        .post("/api/events/1/signup")
+        .set('Authorization', `Bearer ${userToken}`)
+
+        expect(response.status).toBe(201)
+        expect(response.body.msg).toBe(`Successfully signed up user 2 to event 1`)
+    });
+    test('should return 400 if user is already signed up to this event', async () => {
+       const firstSignUp = await request(app)
+        .post("/api/events/1/signup")
+        .set('Authorization', `Bearer ${userToken}`)
+        expect(firstSignUp.status).toBe(201)
+
+        const secondSignUp = await request(app)
+        .post("/api/events/1/signup")
+        .set('Authorization', `Bearer ${userToken}`)
+
+        expect(secondSignUp.status).toBe(400)
+        expect(secondSignUp.body.msg).toBe(`You are already signed up for this event.`)
+    });
+    test('should return 404 if event id is invalid', async () => {
+         const response = await request(app)
+         .post("/api/events/39/signup")
+         .set('Authorization', `Bearer ${userToken}`)
+ 
+         expect(response.status).toBe(404)
+         expect(response.body.msg).toBe(`Event not found`)
+     });
+     test('should return error if user not authenticated', async () => {
+        const response = await request(app).post("/api/events/1/signup") //no auth header
+        expect(response.status).toBe(401) //unauthorised
+        expect(response.body.msg).toBe('No token provided. Authorisation denied.')
+     });
+});
+
+
+//handle case where the user is not authenticated.

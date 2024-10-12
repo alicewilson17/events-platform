@@ -21,3 +21,13 @@ exports.createEvent= async(newEventData) => {
     const res = await db.query(`INSERT INTO events (title, description, date, location, price, is_paid, created_by, img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`, [title, description, date, location, price, is_paid, created_by, img])
     return res.rows[0]
 }
+
+exports.checkIfSignupExists = async(user_id, event_id) => {
+    const res = await db.query(`SELECT * FROM signups WHERE user_id = $1 AND event_id = $2;`, [user_id, event_id])
+    return res
+}
+
+exports.signUpToEvent = async(user_id, event_id) => {
+    const res = await db.query(`INSERT INTO signups (user_id, event_id) VALUES ($1, $2);`, [user_id, event_id])
+    return res.rows[0]
+}

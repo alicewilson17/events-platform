@@ -5,6 +5,7 @@ const format = require('pg-format')
 const seedDatabase = async ({eventsData, usersData}) => {
     try {
         //drop tables if they exist
+        await db.query ('DROP TABLE IF EXISTS signups')
         await db.query('DROP TABLE IF EXISTS events;');
         await db.query('DROP TABLE IF EXISTS users;');
 
@@ -32,6 +33,9 @@ const seedDatabase = async ({eventsData, usersData}) => {
     );
     `)
 
+    await db.query(`
+      CREATE TABLE signups (id SERIAL PRIMARY KEY, event_id INTEGER REFERENCES events(event_id), user_id INTEGER REFERENCES users(user_id), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);`)
+
     const hashedUsers = await Promise.all(usersData.map(async user => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return [user.first_name, user.last_name, user.email, hashedPassword, user.role];
@@ -50,6 +54,10 @@ await db.query(format(
       [title, description, date, location, price, is_paid, created_by, img])
   ));
 
+  //seed signups 
+// await db.query(format(
+//   `INSERT INTO signups (user_id, event_id) VALUES (1, 1), (2, 2), (3, 1);`
+// ))
     } catch (error) {
         console.error('Error seeding database:', error);
     }
