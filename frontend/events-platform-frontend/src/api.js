@@ -9,7 +9,12 @@ const api = axios.create({
 export const getEvents = async () => {
     const url = '/events'
    const response = await api.get(url)
-   console.log(response.data.events, "response data")
 return response.data.events
 
+}
+export const getEventById = async (event_id) => {
+const url = `/events/${event_id}`
+const response = await api.get(url)
+console.log(response.data)
+return response.data
 }

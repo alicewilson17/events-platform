@@ -89,9 +89,47 @@ button, .navbar-link {
   width: 50%;
 }
 
-h4 {
+.hero-section h4 {
   margin-top: 2rem;
   font-size: 2rem;
   line-height: 2.5rem;
   font-weight: 500;
+}
+
+/*event card*/
+.events {
+  margin: auto;
+  padding: 3rem;
+display: flex;
+flex-wrap: wrap;
+gap: 2rem;
+flex-grow: inherit;
+}
+.event-card {
+width: 20rem;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+text-decoration: none;
+color: black;
+
+}
+.event-card img {
+  width: auto;
+  max-width: 20rem;
+}
+
+/*single event*/
+.single-event-container {
+  display: flex;
+  flex-direction: row;
+
+  border-radius: 2rem;
+  padding: 3rem;
+  margin: 3rem;
+box-shadow: 0px 0px 10px 5px lightgray
+}
+
+.single-event-container img {
+  max-width: 30rem;
 }

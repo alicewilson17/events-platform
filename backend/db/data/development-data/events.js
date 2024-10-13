@@ -27,7 +27,7 @@ module.exports = [
       price: 25.00,
       is_paid: true,
       created_by: 5,
-      img: 'https://images.pexels.com/photos/3810844/pexels-photo-3810844.jpeg'
+      img: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg'
     },
     {
       title: 'How to Thrive as a Woman Developer',
@@ -47,7 +47,7 @@ module.exports = [
       price: 75.00,
       is_paid: true,
       created_by: 3,
-      img: 'https://images.pexels.com/photos/6281705/pexels-photo-6281705.jpeg'
+      img: 'https://images.pexels.com/photos/2041393/pexels-photo-2041393.jpeg'
     },
     {
       title: 'Breaking Barriers: Women in Tech',
@@ -67,7 +67,7 @@ module.exports = [
       price: 30.00,
       is_paid: true,
       created_by: 4,
-      img: 'https://images.pexels.com/photos/5732393/pexels-photo-5732393.jpeg'
+      img: 'https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg'
     },
     {
       title: 'Tech Resume Workshop for Women',
@@ -77,7 +77,7 @@ module.exports = [
       price: 0.00,
       is_paid: false,
       created_by: 2,
-      img: 'https://images.pexels.com/photos/3757057/pexels-photo-3757057.jpeg'
+      img: 'https://images.pexels.com/photos/1181722/pexels-photo-1181722.jpeg'
     },
     {
       title: 'Women in Cloud Computing Workshop',
@@ -87,7 +87,7 @@ module.exports = [
       price: 40.00,
       is_paid: true,
       created_by: 3,
-      img: 'https://images.pexels.com/photos/5712397/pexels-photo-5712397.jpeg'
+      img: 'https://images.pexels.com/photos/1181248/pexels-photo-1181248.jpeg'
     },
     {
       title: 'Landing Your First Tech Job: A Webinar for Women',
@@ -97,7 +97,7 @@ module.exports = [
       price: 0.00,
       is_paid: false,
       created_by: 1,
-      img: 'https://images.pexels.com/photos/6384791/pexels-photo-6384791.jpeg'
+      img: 'https://images.pexels.com/photos/1181715/pexels-photo-1181715.jpeg'
     },
     {
       title: 'Women in STEM Career Fair',
@@ -107,7 +107,7 @@ module.exports = [
       price: 0.00,
       is_paid: false,
       created_by: 1,
-      img: 'https://images.pexels.com/photos/3810790/pexels-photo-3810790.jpeg'
+      img: 'https://images.pexels.com/photos/1181438/pexels-photo-1181438.jpeg'
     },
     // Additional events can follow the same structure
   ];
