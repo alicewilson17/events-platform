@@ -9,6 +9,7 @@ function Events() {
       getEvents()
       .then((events) => {
         setEvents(events)
+        console.log(events)
       })
     .catch((error) => {
       console.error('error fetching events:', error)

@@ -133,3 +133,34 @@ box-shadow: 0px 0px 10px 5px lightgray
 .single-event-container img {
   max-width: 30rem;
 }
+
+/*create event form*/
+
+.create-event-form form{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.create-event-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.create-event-form input {
+padding: 0.5rem;
+font-size: 1rem;
+
+}
+.create-event-form textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  
+  }

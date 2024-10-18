@@ -1,5 +1,4 @@
 
-const users = require('../db/data/test-data/users')
 const {fetchEventById, selectAllEvents, createEvent, signUpToEvent, checkIfSignupExists} = require('../models/eventModel')
 //get all events
 exports.getAllEvents = async(req,res,next) => {

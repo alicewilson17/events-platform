@@ -19,9 +19,16 @@ const hashedPassword = await bcrypt.hash(password, 10)
 //create a new user
 const newUser = await createUser(first_name, last_name, email, hashedPassword, role)
 
-//Respond with the new user's data (exc password)
+//Generate JWT token - THIS WAS ADDED IN LATER SO TEST THIS/CHECK IF CAUSES ERRRORS
+const token = jwt.sign({ userId: newUser.user_id, role: newUser.role}, // payload
+    process.env.JWT_SECRET, //secure secret key, from env variable
+    {expiresIn: '1h'} // token expiration time)
+)
+
+//Respond with the token and the new user's data (exc password)
 
 res.status(201).json({
+    token,
     user: {
         user_id: newUser.user_id,
         first_name: newUser.first_name,
@@ -63,6 +70,8 @@ res.status(200).json({
     token,
     user: {
         user_id: user.user_id,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
         role: user.role
     }
