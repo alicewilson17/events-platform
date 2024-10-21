@@ -4,6 +4,8 @@ function CreateEvent() {
 const [newEvent, setNewEvent] = useState({title: "",
     description: "",
     date: "",
+    start_time: "",
+    end_time: "",
     location: "",
     price: "",
     is_paid: false,
@@ -62,8 +64,23 @@ const handleChange = (event) => {
           value={newEvent.date}
           onChange={handleChange}
         ></input>
-    {/* sort this out as need to add time too */}
         {formErrors.date && <p style={{color: 'red'}}>{formErrors.date}</p>}
+        <input
+          type="time"
+          name="start_time"
+          placeholder="Start time"
+          value={newEvent.start_time}
+          onChange={handleChange}
+        ></input>
+        {formErrors.start_time && <p style={{color: 'red'}}>{formErrors.start_time}</p>}
+        <input
+          type="time"
+          name="end_time"
+          placeholder="End time"
+          value={newEvent.end_time}
+          onChange={handleChange}
+        ></input>
+        {formErrors.end_time && <p style={{color: 'red'}}>{formErrors.end_time}</p>}
         
         <label>
         <input

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 function LogInForm() {
 const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
-const [error, setError] = useState("") //api errors
+const [errorFromAPI, setErrorFromAPI] = useState("") //api errors
 const [formErrors, setFormErrors] = useState("") //errors for form validation
 const {logIn} = useAuth()
 const navigate = useNavigate()
@@ -33,23 +33,27 @@ const validateForm = () => {
 const handleLogIn = async(event) => {
   event.preventDefault() //prevent form reload
   const errors = validateForm() //call validate function to validate the inputs
-  if(Object.keys(errors).length > 0) {
-    setFormErrors(errors)
-    return;
-  }
   try {
-setError("") //clear any previous errors
-await logIn(email, password) // call the context function
-navigate(from, {replace: true}) //if login successful, redirect to original location
+    setFormErrors("")
+    setErrorFromAPI("") //clear any previous errors
+    if(Object.keys(errors).length > 0) {
+      setFormErrors(errors)
+      return;
+    }
+ await logIn(email, password) // call the context function
+ navigate(from, {replace: true}) //if login successful, redirect to original location
   }
   catch(error) {
-  setError(error.message)
+    const errorMessage = error.response?.data?.message || 
+    error.message || 
+    "Something went wrong";
+setErrorFromAPI(errorMessage);
   }
 }
 
   return (
     <div className='login'><h2>Log in</h2>
-    {error && <p style={{color: 'red'}}>{error}</p>}
+
     <form onSubmit={handleLogIn}>
         <input type='email' placeholder='Email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
         {formErrors.email && <p style={{color: 'red'}}>{formErrors.email}</p>}
@@ -57,6 +61,7 @@ navigate(from, {replace: true}) //if login successful, redirect to original loca
         {formErrors.password && <p style={{color: 'red'}}>{formErrors.password}</p>}
         <button type="submit">Log in</button>
         </form>
+        { <p style={{color: 'red'}}>{errorFromAPI}</p>}
         <p>Don't have an account? <Link to={`/auth/signup`}>Sign up</Link></p></div>
   )
 }

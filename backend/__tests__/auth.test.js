@@ -84,6 +84,8 @@ describe("GET /api/events/", () => {
             title: expect.any(String),
             description: expect.any(String),
             date: expect.any(String),
+            start_time: expect.any(String),
+            end_time: expect.any(String),
             location: expect.any(String),
             price: expect.any(String),
             is_paid: expect.any(Boolean),
@@ -103,6 +105,7 @@ describe("GET /api/events/:id", () => {
       .then((res) => {
         const event = res.body.event;
         expect(event.title).toBe("Women in Tech Meetup - London");
+        expect(event.start_time).toBe("14:00:00")
       });
   });
   test("should respond with 404 if event doesnt exist", () => {
@@ -121,7 +124,9 @@ describe("POST /api/events", () => {
     const testEvent = {
       title: "TDD for women",
       description: "A webinar about TDD for women.",
-      date: "2024-11-05 10:00:00",
+      date: "2024-11-05",
+      start_time: "10:00:00",
+      end_time: "12:00:00",
       location: "Online Webinar",
       price: 0.0,
       is_paid: false,
@@ -134,10 +139,13 @@ describe("POST /api/events", () => {
       .send(testEvent);
 
     expect(response.status).toBe(201);
+    expect(response.body.event).toHaveProperty("start_time")
     expect(response.body.event).toMatchObject({
       title: "TDD for women",
       description: "A webinar about TDD for women.",
-      date: "2024-11-05T10:00:00.000Z",
+      date: "2024-11-05T00:00:00.000Z",
+      start_time: "10:00:00",
+      end_time: "12:00:00",
       location: "Online Webinar",
       price: "0.00",
       is_paid: false,
@@ -149,7 +157,9 @@ describe("POST /api/events", () => {
     const testEvent = {
       title: "TDD for women",
       description: "A webinar about TDD for women.",
-      date: "2024-11-05 10:00:00",
+      date: "2024-11-05",
+      start_time: "10:00:00",
+      end_time: "12:00:00",
       location: "Online Webinar",
       price: 0.0,
       is_paid: false,
@@ -229,6 +239,8 @@ describe("GET /api/users/:user_id/signups", () => {
         title: expect.any(String),
         description: expect.any(String),
         date: expect.any(String),
+        start_time: expect.any(String),
+        end_time: expect.any(String),
         location: expect.any(String),
         img: expect.any(String),
       });

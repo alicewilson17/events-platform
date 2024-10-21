@@ -32,12 +32,22 @@ export const postEventSignUp = async (user_id, event_id) => {
 
 //log in
 export const logInUser = async(email, password) => {
-    const url = `/auth/login`
+    try {
+        const url = `/auth/login`
     const postBody = {email: email, password: password}
     const response = await api.post(url, postBody)
-    return response.data
-    //response data has token and user properties on it
+    if (response.status !== 200) {
+        throw new Error(response.data.message || "Invalid credentials");
+      }
+  
+      // Return data if login is successful
+      return response.data;
+    } catch (error) {
+      // If Axios encounters a 400 or 401 error, it will go to this catch block
+      throw error;
+    }
 }
+    //response data has token and user properties on it
 
 export const signUpUser = async(first_name, last_name, email, password, role) => {
     const url = `/auth/signup`

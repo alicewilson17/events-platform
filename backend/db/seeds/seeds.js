@@ -24,7 +24,9 @@ const seedDatabase = async ({eventsData, usersData}) => {
       event_id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         description TEXT,
-        date TIMESTAMP NOT NULL,
+        date DATE NOT NULL,
+        start_time TIME NOT NULL,
+        end_time TIME NOT NULL,
         location VARCHAR(255),
         price DECIMAL(10, 2),
         is_paid BOOLEAN NOT NULL DEFAULT FALSE,
@@ -49,15 +51,11 @@ await db.query(format(
 
   // Seed events
   await db.query(format(
-    'INSERT INTO events (title, description, date, location, price, is_paid, created_by, img) VALUES %L;',
-    eventsData.map(({ title, description, date, location, price, is_paid, created_by, img }) => 
-      [title, description, date, location, price, is_paid, created_by, img])
+    'INSERT INTO events (title, description, date, start_time, end_time, location, price, is_paid, created_by, img) VALUES %L;',
+    eventsData.map(({ title, description, date, start_time, end_time, location, price, is_paid, created_by, img }) => 
+      [title, description, date, start_time, end_time, location, price, is_paid, created_by, img])
   ));
 
-  //seed signups 
-// await db.query(format(
-//   `INSERT INTO signups (user_id, event_id) VALUES (1, 1), (2, 2), (3, 1);`
-// ))
     } catch (error) {
         console.error('Error seeding database:', error);
     }

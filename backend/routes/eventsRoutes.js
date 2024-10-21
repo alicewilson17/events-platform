@@ -134,6 +134,8 @@ router.post('/:event_id/signup', verifyToken, postSignUpToEvent)
  *               - title
  *               - description
  *               - date
+ *               - start_time
+ *               - end_time
  *               - location
  *               - price
  *               - is_paid
@@ -148,8 +150,16 @@ router.post('/:event_id/signup', verifyToken, postSignUpToEvent)
  *                 example: "A meetup for women in tech in London"
  *               date:
  *                 type: string
- *                 format: date-time
- *                 example: "2024-11-05T10:00:00.000Z"
+ *                 format: date
+ *                 example: "2024-11-05"
+ *               start_time:
+ *                 type: string
+ *                 format: time
+ *                 example: "14:00:00"
+ *               end_time:
+ *                 type: string
+ *                 format: time
+ *                 example: "16:00:00"
  *               location:
  *                 type: string
  *                 example: "London"

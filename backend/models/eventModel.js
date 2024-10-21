@@ -17,8 +17,8 @@ exports.selectAllEvents = async() => {
 }
 
 exports.createEvent= async(newEventData) => {
-    const {title, description, date, location, price, is_paid, created_by, img} = newEventData
-    const res = await db.query(`INSERT INTO events (title, description, date, location, price, is_paid, created_by, img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`, [title, description, date, location, price, is_paid, created_by, img])
+    const {title, description, date, start_time, end_time, location, price, is_paid, created_by, img} = newEventData
+    const res = await db.query(`INSERT INTO events (title, description, date, start_time, end_time, location, price, is_paid, created_by, img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`, [title, description, date, start_time, end_time, location, price, is_paid, created_by, img])
     return res.rows[0]
 }
 

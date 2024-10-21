@@ -8,15 +8,17 @@ exports.verifyToken = (req, res, next) => {
         return res.status(401).json({msg: 'No token provided. Authorisation denied.'})
     }
 
-    try {
-const decoded = jwt.verify(token, process.env.JWT_SECRET) //secret that was used during signup/login
-req.user = decoded // attach the decoded user info to the request object
-next() //proceed to next middleware or route handler
-    }
-    catch(error) {
-        console.error('JWT error:', error)
-        res.status(401).json({msg: 'Invalid token. Authorisation denied.'})
-    }
+ 
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) {
+          if (err.name === 'TokenExpiredError') {
+            return res.status(401).json({ msg: 'Token expired, please log in again' });
+          }
+          return res.status(403).json({ msg: 'Invalid token' });
+        }
+        req.user = user;
+        next();
+    })
 }
 
 

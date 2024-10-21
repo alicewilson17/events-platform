@@ -10,11 +10,17 @@ const [event, setEvent] = useState({})
 const navigate = useNavigate()
 const {user, isLoggedIn} = useAuth()
 const [error, setError] = useState("")
+const [formattedDate, setFormattedDate] = useState("")
+
 
 useEffect(() => {
   getEventById(event_id)
   .then(({event}) => {
+    console.log(event)
     setEvent(event)
+    const date = new Date(event.date).toISOString().split('T')[0].split("-").reverse().join("/");
+    setFormattedDate(date)
+   
   })
   .catch((error) => {
     console.error(error)
@@ -44,13 +50,13 @@ const handleSignUp=async(user, event) => {
 }
 }
 
-
   return (
     <div className='single-event-container'>
       <img src={event.img}/>
       <div className='single-event-text'>
       <h2>{event.title}</h2>
-      <h3>{event.date}</h3>
+      <h3>{formattedDate}</h3>
+      <h3>{event.start_time.slice(0, -3)} - {event.end_time.slice(0, -3)}</h3>
       <h3>{event.location}</h3>
       <p>{event.description}</p>
       <button className='book-btn' onClick={() => handleSignUp(user, event)}>Sign up to event</button>

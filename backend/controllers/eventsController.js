@@ -24,7 +24,7 @@ catch(error){
 
 //post new event (admin only)
 exports.postEvent = async (req,res,next) => {
-    const {title, description, date, location, price, is_paid, img} = req.body
+    const {title, description, date, start_time, end_time, location, price, is_paid, img} = req.body
     
      // Check if the user is an admin
      if (!req.user || req.user.role !== 'admin') {
@@ -32,14 +32,14 @@ exports.postEvent = async (req,res,next) => {
     }
 
     // Check for required fields
-    if (!title || !description || !date || !location || price === undefined || is_paid === undefined || !img) {
+    if (!title || !description || !date || !start_time || !end_time || !location || price === undefined || is_paid === undefined || !img) {
          return res.status(400).json({msg: 'All fields are required.' }); // Custom error for missing fields
     }
     
     const created_by = req.user.userId //the id of the logged in user
     try {
        
-        const event = await createEvent({title, description, date, location, price, is_paid, created_by, img})
+        const event = await createEvent({title, description, date, start_time, end_time, location, price, is_paid, created_by, img})
         res.status(201).json({event})
     }
     catch(error) {

@@ -37,7 +37,8 @@ export function AuthProvider({children}) {
         }
         catch(error) {
             console.error('Login failed:', error)
-            return false
+            throw error.response?.data?.message || 
+            new Error('Invalid credentials.');
         }
     }
 
