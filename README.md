@@ -7,12 +7,12 @@ The platform is designed to help event organisers from Women In Tech communities
 💻 Tech Stack: React.js for the frontend and Node.js with Express.js for the backend, with a PostgreSQL database.
 
 
-###Test Accounts
+### Test Accounts
 
-####Test user
-Email: user@test.com
+#### Test user
+Email: user@test.com \
 Password: password123
 
-####Test admin
-Email: admin@test.com
+#### Test admin
+Email: admin@test.com \
 Password: password123
