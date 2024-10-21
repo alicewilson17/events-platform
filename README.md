@@ -1,8 +1,7 @@
-# React + Vite
+## There She Codes: Events Platform for Women in Tech
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A bespoke events management platform with the aim of supporting and empowering Women in Tech 👩‍💻✨
 
-Currently, two official plugins are available:
+The platform is designed to help event organisers from Women In Tech communities create and share their events with community members. Users can browse the events on offer, sign up and add events to their calendars.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+💻 Tech Stack: React.js for the frontend and Node.js with Express.js for the backend, with a PostgreSQL database.

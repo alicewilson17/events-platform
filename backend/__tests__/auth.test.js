@@ -235,5 +235,8 @@ describe("GET /api/users/:user_id/signups", () => {
     });
   });
 });
+//handle case where 404 user id not found.
 
-//handle case where the user is not authenticated.
+//handle case where user is not signed up to any events.
+
+//handle case where 403 the user is not authenticated.
