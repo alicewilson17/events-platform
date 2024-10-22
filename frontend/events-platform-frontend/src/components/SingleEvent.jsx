@@ -16,7 +16,6 @@ const [formattedDate, setFormattedDate] = useState("")
 useEffect(() => {
   getEventById(event_id)
   .then(({event}) => {
-    console.log(event)
     setEvent(event)
     const date = new Date(event.date).toISOString().split('T')[0].split("-").reverse().join("/");
     setFormattedDate(date)
@@ -56,7 +55,7 @@ const handleSignUp=async(user, event) => {
       <div className='single-event-text'>
       <h2>{event.title}</h2>
       <h3>{formattedDate}</h3>
-      <h3>{event.start_time.slice(0, -3)} - {event.end_time.slice(0, -3)}</h3>
+      <h3>{event.start_time.slice(0,-3)} - {event.end_time.slice(0,-3)}</h3>
       <h3>{event.location}</h3>
       <p>{event.description}</p>
       <button className='book-btn' onClick={() => handleSignUp(user, event)}>Sign up to event</button>
