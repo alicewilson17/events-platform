@@ -49,6 +49,7 @@ export const logInUser = async(email, password) => {
 }
     //response data has token and user properties on it
 
+    //sign up new user
 export const signUpUser = async(first_name, last_name, email, password, role) => {
     const url = `/auth/signup`
     const postBody = {first_name, last_name, email, password, role}
@@ -65,6 +66,18 @@ export const getSignUpsByUser = async(user_id) => {
     };
     
     const response = await api.get(url, config)
+    return response.data
+}
+
+//create new event (admins only)
+export const createEvent = async(title, description, date, start_time, end_time, location, price, is_paid, img) => {
+    const url = `/events`
+    const postBody = {title, description, date, start_time, end_time, location, price, is_paid, img}
+    const token = localStorage.getItem('token')
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+    const response = await api.post(url, postBody, config)
     console.log(response.data)
     return response.data
 }
