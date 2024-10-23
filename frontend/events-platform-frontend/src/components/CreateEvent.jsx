@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { createEvent } from '../api'
+import { useAuth } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 function CreateEvent() {
+    const {user, isLoggedIn} = useAuth()
+    const navigate = useNavigate()
 const [newEvent, setNewEvent] = useState({title: "",
     description: "",
     date: "",
@@ -13,6 +17,8 @@ const [newEvent, setNewEvent] = useState({title: "",
     img: ""
 })
 const [formErrors, setFormErrors] = useState("")
+const [isSuccess, setIsSuccess] = useState(false)
+const [isFormShown, setIsFormShown] = useState(true)
 
 const validateForm = () => {
     const errors = {}
@@ -72,8 +78,11 @@ const handleChange = (event) => {
                 eventData.is_paid,
                 eventData.img
             );
-    
             console.log("Event created successfully:", createdEvent);
+            setIsFormShown(false)
+            setIsSuccess(true)
+
+            //
 
         }
         catch(error) {
@@ -81,11 +90,18 @@ const handleChange = (event) => {
         }
     }
 
+const isAdmin = user && user.role === 'admin'
+
   return (
-    <div className='create-event-form'><h2>Add a new event</h2>
+      <>
+      {isAdmin ? (
+        <>
+        {isFormShown ? (
+       <div className='create-event-form'>
+        <h1>Add a new event</h1>
     <form onSubmit={handleCreateEvent}>
         <label>
-Event title <span style={{color: 'red'}}>*</span>
+<p>Event title <span style={{color: 'red'}}>*</span></p>
     <input
           type="text"
           name="title"
@@ -96,7 +112,7 @@ Event title <span style={{color: 'red'}}>*</span>
         </label>
         {formErrors.title && <p style={{color: 'red'}}>{formErrors.title}</p>}
         <label>
-        Event description <span style={{color: 'red'}}>*</span>
+        <p>Event description <span style={{color: 'red'}}>*</span></p>
         <textarea
           name="description"
 
@@ -106,7 +122,7 @@ Event title <span style={{color: 'red'}}>*</span>
         </label>
         {formErrors.description && <p style={{color: 'red'}}>{formErrors.description}</p>}
         <label>
-        Location <span style={{color: 'red'}}>*</span>
+        <p>Location <span style={{color: 'red'}}>*</span></p>
         <input
           type="text"
           name="location"
@@ -117,7 +133,7 @@ Event title <span style={{color: 'red'}}>*</span>
         </label>
         {formErrors.location && <p style={{color: 'red'}}>{formErrors.location}</p>}
         <label>
-        Event date <span style={{color: 'red'}}>*</span>
+        <p>Event date <span style={{color: 'red'}}>*</span></p>
         <input
           type="date"
           name="date"
@@ -128,7 +144,7 @@ Event title <span style={{color: 'red'}}>*</span>
         </label>
         {formErrors.date && <p style={{color: 'red'}}>{formErrors.date}</p>}
         <label>
-        Start time <span style={{color: 'red'}}>*</span>
+        <p>Start time <span style={{color: 'red'}}>*</span></p>
         <input
           type="time"
           name="start_time"
@@ -139,7 +155,7 @@ Event title <span style={{color: 'red'}}>*</span>
         </label>
         {formErrors.start_time && <p style={{color: 'red'}}>{formErrors.start_time}</p>}
         <label>
-        End time <span style={{color: 'red'}}>*</span>
+        <p>End time <span style={{color: 'red'}}>*</span></p>
         <input
           type="time"
           name="end_time"
@@ -150,7 +166,7 @@ Event title <span style={{color: 'red'}}>*</span>
         </label>
         {formErrors.end_time && <p style={{color: 'red'}}>{formErrors.end_time}</p>}
         
-        <label>
+        <label className='radio-label'>
         <input
           type="radio"
           name="is_paid"
@@ -160,7 +176,7 @@ Event title <span style={{color: 'red'}}>*</span>
           onChange={handleChange}
         ></input>This event is free to attend
         </label>
-        <label>
+        <label className='radio-label'>
         <input
           type="radio"
           name="is_paid"
@@ -170,7 +186,7 @@ Event title <span style={{color: 'red'}}>*</span>
         ></input>This is a paid event
         </label>
         <label>
-        Ticket price (£) {newEvent.is_paid && <span style={{color: 'red'}}>*</span>}
+        <p>Ticket price (£) {newEvent.is_paid && <span style={{color: 'red'}}>*</span>}</p>
         <input type="number" name="price" value = {newEvent.price} onChange={handleChange} min="0.01" step="0.01" max="2500" disabled={newEvent.is_paid ? false : true}  />
         {formErrors.price && <p style={{color: 'red'}}>{formErrors.price}</p>}
         </label>
@@ -184,16 +200,20 @@ Event title <span style={{color: 'red'}}>*</span>
           onChange={handleChange}
         ></input>
         </label>
-    
         <button type='submit'>Create event</button>
-
-        
-
-
-
-
         </form>
         </div>
+      ) : (
+    isSuccess && <div>Success</div>
+      )}
+      </>
+       ) : (
+        <div className='admin-only-message'>
+            <h2>Oops! You need to be an admin to view this page.</h2>
+        {isLoggedIn ?  <a href="/"><button>Back to home</button></a> : <a href="/auth/login"><button>Log in</button></a>}
+       </div>
+    )}
+    </>
   )
 }
 

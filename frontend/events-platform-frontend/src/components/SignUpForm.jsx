@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function SignUpForm() {
   const [newUserData, setNewUserData] = useState({
@@ -65,8 +66,10 @@ navigate(from, {replace: true}) //if login successful, redirect to original loca
   };
 
   return (
+    <div className='signup-page'>
+    <img src="https://images.pexels.com/photos/850360/pexels-photo-850360.jpeg" alt="signup image"/>
     <div className="signupform">
-      <h2>Sign Up</h2>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSignUpUser}>
         <input
           type="text"
@@ -121,8 +124,10 @@ navigate(from, {replace: true}) //if login successful, redirect to original loca
             </label>
         </div>
         <button type="submit">Sign up</button>
-        {error && <p style={{color: 'red'}}>{error}</p>}
       </form>
+        {error && <p style={{color: 'red'}}>{error}</p>}
+        <p>Already have an an account? <Link to={`/auth/login`}>Log in</Link></p>
+    </div>
     </div>
   );
 }

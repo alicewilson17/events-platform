@@ -9,6 +9,7 @@ import LogInForm from './components/LogInForm'
 import SignUpForm from './components/SignUpForm'
 import EventSignUpSuccess from './components/EventSignUpSuccess'
 import CreateEvent from './components/CreateEvent'
+import CreateEventSuccess from './components/CreateEventSuccess'
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
       <Route path = "/auth/signup" element = {<SignUpForm/>}/>
       <Route path = "/events/:event_id/signupsuccess" element = {<EventSignUpSuccess/>}/>
       <Route path = "/events/createevent" element={<CreateEvent/>}/>
+      <Route path = "/events/createevent/success" element={<CreateEventSuccess/>}/>
 
      </Routes>
     </>

@@ -52,7 +52,11 @@ setErrorFromAPI(errorMessage);
 }
 
   return (
-    <div className='login'><h2>Log in</h2>
+    <div className='login-page'>
+    <img src="https://images.pexels.com/photos/850360/pexels-photo-850360.jpeg" alt="login image"/>
+   
+    <div className='login'><h1>Welcome back</h1>
+    <h2>Please log in to continue</h2>
 
     <form onSubmit={handleLogIn}>
         <input type='email' placeholder='Email' value={email} onChange={(event) => setEmail(event.target.value)}></input>
@@ -63,6 +67,7 @@ setErrorFromAPI(errorMessage);
         </form>
         { <p style={{color: 'red'}}>{errorFromAPI}</p>}
         <p>Don't have an account? <Link to={`/auth/signup`}>Sign up</Link></p></div>
+        </div>
   )
 }
 

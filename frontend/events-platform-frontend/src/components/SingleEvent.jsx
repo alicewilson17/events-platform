@@ -54,18 +54,19 @@ const handleSignUp=async(user, event) => {
   return (
     <>
       <div className='banner-container'>
-      <img src={event.img} alt="Banner image" class="banner-img"/>
+      <img src={event.img} alt="Banner image" className="banner-img"/>
       </div>
     <div className='single-event-container'>
       <div className='single-event-text'>
               <h1>{event.title}</h1>
-      <h3>{formattedDate}</h3>
-      <h3>{formattedTimes}</h3>
-      <h3>{event.location}</h3>
+      <h3><span>Date:</span> {formattedDate}</h3>
+      <h3><span>Time:</span> {formattedTimes}</h3>
+      <h3><span>Location:</span> {event.location}</h3>
+      <h4>About this event</h4>
       <p>{event.description}</p>
       </div>
       <div className='book-section'>
-<h3>{event.isPaid ? `£${event.price}`: "This event is free to attend."}</h3>
+<h3>{event.is_paid ? `Tickets: £${event.price}`: "This event is free to attend."}</h3>
       <button className='book-btn' onClick={() => handleSignUp(user, event)}>Sign up to event</button>
       {error && <p>{error}</p>}
       </div>
