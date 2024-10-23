@@ -11,7 +11,7 @@ const navigate = useNavigate()
 const {user, isLoggedIn} = useAuth()
 const [error, setError] = useState("")
 const [formattedDate, setFormattedDate] = useState("")
-
+const [formattedTimes, setFormattedTimes] = useState("")
 
 useEffect(() => {
   getEventById(event_id)
@@ -19,6 +19,8 @@ useEffect(() => {
     setEvent(event)
     const date = new Date(event.date).toISOString().split('T')[0].split("-").reverse().join("/");
     setFormattedDate(date)
+    const formattedTimeString = `${event.start_time[0] === '0' ? event.start_time.slice(1,-3) : event.start_time.slice(0,-3)} - ${event.end_time.slice(0,-3)}`
+    setFormattedTimes(formattedTimeString)
    
   })
   .catch((error) => {
@@ -50,18 +52,25 @@ const handleSignUp=async(user, event) => {
 }
 
   return (
+    <>
+      <div className='banner-container'>
+      <img src={event.img} alt="Banner image" class="banner-img"/>
+      </div>
     <div className='single-event-container'>
-      <img src={event.img}/>
       <div className='single-event-text'>
-      <h2>{event.title}</h2>
+              <h1>{event.title}</h1>
       <h3>{formattedDate}</h3>
-      <h3>{event.start_time.slice(0,-3)} - {event.end_time.slice(0,-3)}</h3>
+      <h3>{formattedTimes}</h3>
       <h3>{event.location}</h3>
       <p>{event.description}</p>
+      </div>
+      <div className='book-section'>
+<h3>{event.isPaid ? `£${event.price}`: "This event is free to attend."}</h3>
       <button className='book-btn' onClick={() => handleSignUp(user, event)}>Sign up to event</button>
       {error && <p>{error}</p>}
       </div>
       </div>
+      </>
   )
 }
 

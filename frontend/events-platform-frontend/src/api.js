@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useAuth } from './contexts/AuthContext';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -74,10 +75,23 @@ export const createEvent = async(title, description, date, start_time, end_time,
     const url = `/events`
     const postBody = {title, description, date, start_time, end_time, location, price, is_paid, img}
     const token = localStorage.getItem('token')
+    if (!token) {
+        throw new Error('User is not authenticated.');
+      }
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
-    const response = await api.post(url, postBody, config)
-    console.log(response.data)
-    return response.data
+
+    try {
+        const response = await api.post(url, postBody, config)
+        console.log(response.data)
+        return response.data
+    }
+    catch(error) {
+        if (error.response?.status === 401) {
+            useAuth().logOut()
+            throw new Error('Session expired. Please log in again.')
+        }
+        throw error
+    }
 }

@@ -11,8 +11,7 @@ function EventCard({event}) {
         <img src={event.img}/>
         <h3>{event.title}</h3>
               </Link>
-        <h4>{formattedDate}</h4>
-        <p>{event.start_time.slice(0, -3)} - {event.end_time.slice(0, -3)}</p>
+        <p><span>{formattedDate}</span> {event.start_time[0] === '0' ? event.start_time.slice(1,-3) : event.start_time.slice(0,-3)} - {event.end_time.slice(0,-3)}</p>
         <p>{event.location}</p>
         <p>{event.is_paid ? 'From £' + event.price : 'Free'}</p>
         </div>
