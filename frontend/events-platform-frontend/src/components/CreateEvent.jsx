@@ -17,8 +17,6 @@ const [newEvent, setNewEvent] = useState({title: "",
     img: ""
 })
 const [formErrors, setFormErrors] = useState("")
-const [isSuccess, setIsSuccess] = useState(false)
-const [isFormShown, setIsFormShown] = useState(true)
 
 const validateForm = () => {
     const errors = {}
@@ -53,11 +51,15 @@ const handleChange = (event) => {
         event.preventDefault()
         const errors = validateForm()
 
+
+
         //set a default cover image if no URL is provided
         const defaultImageURL = "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg"
         const eventData = {
             ...newEvent,
-            img: newEvent.img || defaultImageURL
+            img: newEvent.img || defaultImageURL,
+            //ensure price is set to 0 if event is free
+            price: newEvent.is_paid ? newEvent.price : 0.00
         }
         console.log(eventData)
 
@@ -66,7 +68,7 @@ const handleChange = (event) => {
             if(Object.keys(errors).length > 0) {
                 setFormErrors(errors)
                 return;
-              }
+            }
             const createdEvent = await createEvent(
                 eventData.title,
                 eventData.description,
@@ -79,10 +81,7 @@ const handleChange = (event) => {
                 eventData.img
             );
             console.log("Event created successfully:", createdEvent);
-            setIsFormShown(false)
-            setIsSuccess(true)
-
-            //
+            navigate('/events/createevent/success', {state: {event: createdEvent}})
 
         }
         catch(error) {
@@ -95,8 +94,6 @@ const isAdmin = user && user.role === 'admin'
   return (
       <>
       {isAdmin ? (
-        <>
-        {isFormShown ? (
        <div className='create-event-form'>
         <h1>Add a new event</h1>
     <form onSubmit={handleCreateEvent}>
@@ -203,10 +200,6 @@ const isAdmin = user && user.role === 'admin'
         <button type='submit'>Create event</button>
         </form>
         </div>
-      ) : (
-    isSuccess && <div>Success</div>
-      )}
-      </>
        ) : (
         <div className='admin-only-message'>
             <h2>Oops! You need to be an admin to view this page.</h2>

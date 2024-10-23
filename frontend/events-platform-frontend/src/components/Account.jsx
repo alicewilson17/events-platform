@@ -38,7 +38,7 @@ const handleNavigate = () => {
       {signedUpEvents.length === 0 ? <h2>You have no upcoming events.</h2> : <div className='signups'>
         <h3>Your upcoming events</h3>
         <div className='upcoming-events'>
-          {signedUpEvents.map(signup => <EventCard event={signup}/>)}
+          {signedUpEvents.map(signup => <EventCard key={signup.event_id} event={signup}/>)}
 
         </div>
         </div>}

@@ -17,7 +17,7 @@ const googleCalURL = `https://calendar.google.com/calendar/render?action=TEMPLAT
 
   return (
     <a href = {googleCalURL} target="_blank" rel="noopener noreferrer">
-        <button>Add to Google Calendar</button>
+        <button className='add-to-google-cal'>Add to Google Calendar</button>
     </a>
   )
 }
