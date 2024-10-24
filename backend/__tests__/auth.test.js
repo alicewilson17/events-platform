@@ -22,6 +22,7 @@ beforeEach(async () => {
     .send({ email: "sophie.johnson@example.com", password: "password123" });
 
   adminToken = adminLoginResponse.body.token;
+
 });
 
 afterAll(() => {
@@ -176,7 +177,7 @@ describe("POST /api/events", () => {
   });
 });
 
-//sign up to event
+//sign up to event 
 describe("POST /api/events/:event_id/signup", () => {
   test("should return new signup and 201 if user successfully signs up to an event", async () => {
     const response = await request(app)
@@ -222,6 +223,7 @@ describe("GET /api/users/:user_id/signups", () => {
     await request(app)
       .post("/api/events/1/signup")
       .set("Authorization", `Bearer ${userToken}`);
+
     await request(app)
       .post("/api/events/2/signup")
       .set("Authorization", `Bearer ${userToken}`);
@@ -246,9 +248,75 @@ describe("GET /api/users/:user_id/signups", () => {
       });
     });
   });
-});
-//handle case where 404 user id not found.
+  test("should respond with 404 if user not found", async () => {
 
-//handle case where user is not signed up to any events.
+    await request(app)
+    .post("/api/events/1/signup")
+    .set("Authorization", `Bearer ${userToken}`);
+  await request(app)
+    .post("/api/events/2/signup")
+    .set("Authorization", `Bearer ${userToken}`);
 
-//handle case where 403 the user is not authenticated.
+    const response = await request(app)
+      .get("/api/users/1000/signups") // Using a non-existent user ID
+      .set("Authorization", `Bearer ${userToken}`);
+
+    expect(response.status).toBe(403);
+    expect(response.body.msg).toBe("Access denied.");
+  });
+
+  test("should respond with 401 if the user is not authenticated", async () => {
+    const response = await request(app)
+      .get(`/api/users/1/signups`); // No token provided
+    expect(response.status).toBe(401);
+    expect(response.body.msg).toBe('No token provided. Authorisation denied.');
+
+})
+})
+
+
+
+//admin only: get created events with signups
+describe("GET /api/admin/events", () => {
+it("should return all events created by the admin with signup counts", async () => {
+    const response = await request(app)
+      .get("/api/users/admin/events")
+      .set("Authorization", `Bearer ${adminToken}`); // Use admin token
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("adminEvents");
+    expect(Array.isArray(response.body.adminEvents)).toBe(true);
+    expect(response.body.adminEvents.length).toBeGreaterThan(0); // Adjust based on your seeded data
+
+    // Validate the structure of the events
+    response.body.adminEvents.forEach((event) => {
+      expect(event).toHaveProperty("event_id");
+      expect(event).toHaveProperty("title");
+      expect(event).toHaveProperty("description");
+      expect(event).toHaveProperty("date");
+      expect(event).toHaveProperty("start_time");
+      expect(event).toHaveProperty("end_time");
+      expect(event).toHaveProperty("location");
+      expect(event).toHaveProperty("price");
+      expect(event).toHaveProperty("is_paid");
+      expect(event).toHaveProperty("created_by");
+      expect(event).toHaveProperty("img");
+      expect(event).toHaveProperty("signup_count");
+    });
+  });
+
+  it("should return 401 if no token is provided", async () => {
+    const response = await request(app).get("/api/users/admin/events");
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ msg: "No token provided. Authorisation denied." });
+  });
+
+  it("should return 403 if user is not an admin", async () => {
+    const response = await request(app)
+      .get("/api/users/admin/events")
+      .set("Authorization", `Bearer ${userToken}`); // Use non-admin token
+
+    expect(response.status).toBe(403);
+    expect(response.body).toEqual({ msg: "Access denied. Admins only." });
+  });
+})

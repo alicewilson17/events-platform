@@ -95,3 +95,28 @@ export const createEvent = async(title, description, date, start_time, end_time,
         throw error
     }
 }
+
+//ADMIN ONLY: view created events with signups
+export const getCreatedEvents = async(user_id) => {
+    const url = `/users/admin/events`
+    const token = localStorage.getItem('token')
+    if (!token) {
+        throw new Error('User is not authenticated.');
+      }
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+
+    try {
+        const response = await api.get(url, config)
+        console.log(response.data)
+        return response.data
+    }
+    catch(error) {
+        if (error.response?.status === 401) {
+            useAuth().logOut()
+            throw new Error('Session expired. Please log in again.')
+        }
+        throw error
+    }
+}

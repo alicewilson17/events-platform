@@ -19,3 +19,13 @@ exports.fetchSignupsByUser = async(user_id) => {
 const res = await db.query('SELECT events.event_id, events.title, events.description, events.date, events.start_time, events.end_time, events.location, events.img FROM signups JOIN events ON signups.event_id = events.event_id WHERE signups.user_id = $1;', [user_id])
 return res.rows
 }
+
+//ADMIN ONLY: get created events
+exports.fetchAdminEventsWithSignups = async(user_id) => {
+        const res = await db.query (`
+                SELECT events.*, COUNT(signups.id) AS signup_count
+                FROM events LEFT JOIN signups ON events.event_id = signups.event_id
+                WHERE events.created_by = $1
+                GROUP BY events.event_id;`, [user_id])
+        return res.rows
+}
