@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { createEvent } from '../api'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import Loading from './Loading'
 
 function CreateEvent() {
     const {user, isLoggedIn} = useAuth()
@@ -17,6 +18,7 @@ const [newEvent, setNewEvent] = useState({title: "",
     img: ""
 })
 const [formErrors, setFormErrors] = useState("")
+const[isLoading, setIsLoading] = useState(false)
 
 const validateForm = () => {
     const errors = {}
@@ -51,8 +53,6 @@ const handleChange = (event) => {
         event.preventDefault()
         const errors = validateForm()
 
-
-
         //set a default cover image if no URL is provided
         const defaultImageURL = "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg"
         const eventData = {
@@ -69,6 +69,7 @@ const handleChange = (event) => {
                 setFormErrors(errors)
                 return;
             }
+            setIsLoading(true)
             const createdEvent = await createEvent(
                 eventData.title,
                 eventData.description,
@@ -91,6 +92,9 @@ const handleChange = (event) => {
 
 const isAdmin = user && user.role === 'admin'
 
+if(isLoading) {
+    return <Loading/>
+}
   return (
       <>
       {isAdmin ? (

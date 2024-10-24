@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Events from './Events'
-import { Link } from 'react-router-dom'
-
-
-
-
 
 function Home() {
-
 
   return (
     <div className='home'>

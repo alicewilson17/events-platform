@@ -4,12 +4,14 @@ import LogInForm from './LogInForm'
 import { getCreatedEvents, getSignUpsByUser } from '../api'
 import { useNavigate, useParams } from 'react-router-dom'
 import EventCard from './EventCard'
+import Loading from './Loading'
 
 
 function Account() {
   const {user, logOut, isLoggedIn} = useAuth()
 const [signedUpEvents, setSignedUpEvents] = useState([])
 const [adminCreatedEvents, setAdminCreatedEvents] = useState([])
+const [isLoading, setIsLoading] = useState(true)
 const navigate = useNavigate()
 
 useEffect(() => {
@@ -18,6 +20,7 @@ useEffect(() => {
     getSignUpsByUser(userId)
     .then(({signUps}) => {
       setSignedUpEvents(signUps)
+      setIsLoading(false)
     }
     )
     .catch((error) => {
@@ -28,6 +31,7 @@ useEffect(() => {
       getCreatedEvents(userId)
         .then(({adminEvents}) => {
          setAdminCreatedEvents(adminEvents)
+         setIsLoading(false)
         })
        .catch((error) => {
          console.error('Error fetching admin created events:', error)
@@ -40,10 +44,14 @@ useEffect(() => {
 const handleNavigate = () => {
  navigate('/events/createevent')
 }
-
+if (!isLoggedIn) {
+  return <LogInForm/>
+}
+if(isLoading) {
+  return <Loading/>
+}
   return (
     <div className='account'>
-      {isLoggedIn ? 
       <div className='dashboard'>
         <div className='header-and-button'><h1>Hello, {user.first_name}</h1> <button onClick={logOut}>Log out</button></div><hr></hr>
       {user.role === 'admin' && <div className='admin-created-events'><div className='header-and-button'><h2>Events You're Hosting</h2><button onClick={handleNavigate}>Create event</button></div>
@@ -61,7 +69,7 @@ const handleNavigate = () => {
           {signedUpEvents.map(signup => <EventCard key={signup.event_id} event={signup}/>)}
         </div>}
         </div>
-      </div> : <LogInForm/>}
+      </div>
       </div>
     //if user is not logged in, display Auth component
     //if user is logged in, display account details
