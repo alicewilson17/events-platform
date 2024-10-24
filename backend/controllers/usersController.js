@@ -31,9 +31,6 @@ exports.getAdminEvents = async (req,res,next) => {
    try {
       const adminEvents = await fetchAdminEventsWithSignups(userId)
 
-      if(adminEvents.length === 0) {
-         res.status(404).json({message: "No events found for this admin."})
-      }
       res.status(200).json({adminEvents})
    }
    catch(error) {
