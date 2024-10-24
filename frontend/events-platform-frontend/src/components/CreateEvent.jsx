@@ -95,7 +95,7 @@ const isAdmin = user && user.role === 'admin'
       <>
       {isAdmin ? (
        <div className='create-event-form'>
-        <h1>Add a new event</h1>
+        <h1>Create a New Event</h1>
     <form onSubmit={handleCreateEvent}>
         <label>
 <p>Event title <span style={{color: 'red'}}>*</span></p>
