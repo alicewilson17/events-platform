@@ -16,7 +16,7 @@ function CreateEventSuccess() {
         <div className='create-event-success'>
         <div className='success-message'>
         <h1>Event created successfully!</h1>
-        <img src="../../assets/icons/checkbox.png"/>
+        <img src="../../assets/icons/checkbox.png" alt="purple tick"/>
         </div>
         <div className='event-details'>
         <h2>Event details</h2>

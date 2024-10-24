@@ -53,7 +53,7 @@ setErrorFromAPI(errorMessage);
 
   return (
     <div className='login-page'>
-    <img src="https://images.pexels.com/photos/850360/pexels-photo-850360.jpeg" alt="login image"/>
+    <img src="https://images.pexels.com/photos/850360/pexels-photo-850360.jpeg" alt="Pink flowers on a table with a laptop and phone."/>
    
     <div className='login'><h1>Welcome back</h1>
     <h2>Please log in to continue</h2>

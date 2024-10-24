@@ -9,10 +9,10 @@ The platform is designed to help event organisers from Women In Tech communities
 
 ### Test Accounts
 
-#### Test user
-Email: user@test.com \
+#### Test attendee
+Email: jennysmith@attendee.com \
 Password: password123
 
 #### Test admin
-Email: admin@test.com \
+Email: janedoe@admin.com \
 Password: password123

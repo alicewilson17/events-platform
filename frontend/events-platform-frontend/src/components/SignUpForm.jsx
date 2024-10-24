@@ -67,7 +67,7 @@ navigate(from, {replace: true}) //if login successful, redirect to original loca
 
   return (
     <div className='signup-page'>
-    <img src="https://images.pexels.com/photos/850360/pexels-photo-850360.jpeg" alt="signup image"/>
+    <img src="https://images.pexels.com/photos/850360/pexels-photo-850360.jpeg" alt="Pink flowers on a table with a laptop and phone."/>
     <div className="signupform">
       <h1>Sign Up</h1>
       <form onSubmit={handleSignUpUser}>

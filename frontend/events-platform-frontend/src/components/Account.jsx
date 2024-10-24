@@ -55,7 +55,7 @@ if(isLoading) {
       <div className='dashboard'>
         <div className='header-and-button'><h1>Hello, {user.first_name}</h1> <button onClick={logOut}>Log out</button></div><hr></hr>
       {user.role === 'admin' && <div className='admin-created-events'><div className='header-and-button'><h2>Events You're Hosting</h2><button onClick={handleNavigate}>Create event</button></div>
-      {adminCreatedEvents.length === 0 ? <p>You aren't hosting any upcoming events.</p> : 
+      {adminCreatedEvents.length === 0 ? <p className="no-events-message">You aren't hosting any upcoming events.</p> : 
       <div className='created-events'>
         {adminCreatedEvents.map(adminEvent => <EventCard key={adminEvent.event_id} event={adminEvent}/>)}
       </div>
@@ -65,7 +65,7 @@ if(isLoading) {
       }
       <div className='signups'>
         <h2>Events You're Signed Up To</h2>
-        {signedUpEvents.length === 0 ? <p>You have no upcoming events.</p> : <div className='upcoming-events'>
+        {signedUpEvents.length === 0 ? <p className="no-events-message">You have no upcoming events.</p> : <div className='upcoming-events'>
           {signedUpEvents.map(signup => <EventCard key={signup.event_id} event={signup}/>)}
         </div>}
         </div>

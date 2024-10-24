@@ -8,7 +8,7 @@ function EventCard({event}) {
   
         <div className='event-card'>
               <Link to={`/events/${event.event_id}`}>
-        <img src={event.img}/>
+        <img src={event.img} alt={`Thumbnail image for ${event.title}`}/>
         <h3>{event.title}</h3>
               </Link>
         <p><span>{formattedDate}</span> {event.start_time[0] === '0' ? event.start_time.slice(1,-3) : event.start_time.slice(0,-3)} - {event.end_time.slice(0,-3)}</p>

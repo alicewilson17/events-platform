@@ -17,7 +17,7 @@ function EventSignUpSuccess() {
 <div className='signup-success'>
 <div className='success-message'>
 <h1>See you there, {user.first_name}!</h1>
-<img src="../../assets/icons/checkbox.png"/>
+<img src="../../assets/icons/checkbox.png" alt="purple tick"/>
 <h2>You're going to <strong>{event.title}</strong></h2>
 </div>
 <div className='event-details'>
