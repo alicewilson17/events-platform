@@ -7,11 +7,19 @@ require('dotenv').config({
 });
 //This loads environment variables from a specific `.env` file based on the current environment. The path is constructed using the current directory (`__dirname`).
 
-if (!process.env.PGDATABASE) {
-  throw new Error('PGDATABASE not set');
+if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
+  throw new Error('PGDATABASE or DATABASE_URL not set');
 }
 else {
-    console.log(`connected to the ${process.env.PGDATABASE} database`)
+    console.log(`connected to the database`)
 }
 
-module.exports = new Pool();
+const config = {};
+
+if (ENV === 'production') {
+  config.connectionString = process.env.DATABASE_URL;
+  config.max = 2;
+}
+
+module.exports = new Pool(config);
+

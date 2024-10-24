@@ -9,7 +9,6 @@ const usersRoutes = require('./routes/usersRoutes')
 const { handleCustomErrors, handleInvalidEndpoint, handlePSQLErrors, handleServerError, handleBadMethod } = require("./middleware/errorHandlingMiddleware")
 
 const app = express()
-const PORT = process.env.PORT || 5001
 
 // Serve the Swagger documentation at /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -28,9 +27,5 @@ app.use(handleInvalidEndpoint)
 app.use(handlePSQLErrors)
 app.use(handleServerError)
 app.use(handleBadMethod)
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-    console.log(`Swagger docs available at ${PORT}/api-docs`)})
 
 module.exports = app
