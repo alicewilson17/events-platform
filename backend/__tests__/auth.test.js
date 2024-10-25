@@ -281,12 +281,12 @@ describe("GET /api/admin/events", () => {
 it("should return all events created by the admin with signup counts", async () => {
     const response = await request(app)
       .get("/api/users/admin/events")
-      .set("Authorization", `Bearer ${adminToken}`); // Use admin token
+      .set("Authorization", `Bearer ${adminToken}`); 
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("adminEvents");
     expect(Array.isArray(response.body.adminEvents)).toBe(true);
-    expect(response.body.adminEvents.length).toBeGreaterThan(0); // Adjust based on your seeded data
+    expect(response.body.adminEvents.length).toBeGreaterThan(0); 
 
     // Validate the structure of the events
     response.body.adminEvents.forEach((event) => {
@@ -314,7 +314,7 @@ it("should return all events created by the admin with signup counts", async () 
   it("should return 403 if user is not an admin", async () => {
     const response = await request(app)
       .get("/api/users/admin/events")
-      .set("Authorization", `Bearer ${userToken}`); // Use non-admin token
+      .set("Authorization", `Bearer ${userToken}`); 
 
     expect(response.status).toBe(403);
     expect(response.body).toEqual({ msg: "Access denied. Admins only." });

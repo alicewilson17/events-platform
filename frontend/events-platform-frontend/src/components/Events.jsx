@@ -22,12 +22,15 @@ if(isLoading) {
   return <Loading/>
 }
   return (
+    <div className='events-container'>
+   <h2 className='events-header'>What's On</h2>
     <div className='events'>
          {events.map((event)=> { 
           
           return <EventCard key={event.event_id} event={event}/>
 
         })}
+    </div>
     </div>
   )
 }

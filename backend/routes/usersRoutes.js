@@ -57,8 +57,6 @@ router.get('/:user_id/signups', verifyToken, getSignUpsByUser)
 
 //ADMIN ONLY: get events created by admin (with signups)
 
-router.get('/admin/events', verifyToken, adminOnly, getAdminEvents)
-
 /**
  * @swagger
  * /api/admin/events:
@@ -130,6 +128,6 @@ router.get('/admin/events', verifyToken, adminOnly, getAdminEvents)
  *       500:
  *         description: Internal server error.
  */
-
+router.get('/admin/events', verifyToken, adminOnly, getAdminEvents)
 
 module.exports = router

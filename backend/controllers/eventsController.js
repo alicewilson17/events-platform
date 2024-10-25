@@ -33,7 +33,7 @@ exports.postEvent = async (req,res,next) => {
 
     // Check for required fields
     if (!title || !description || !date || !start_time || !end_time || !location || price === undefined || is_paid === undefined || !img) {
-         return res.status(400).json({msg: 'All fields are required.' }); // Custom error for missing fields
+         return res.status(400).json({msg: 'All fields are required.' });
     }
     
     const created_by = req.user.userId //the id of the logged in user
@@ -46,9 +46,6 @@ exports.postEvent = async (req,res,next) => {
         next(error)
     }
 }
-//update event (admin only)
-
-//delete event (admin only)
 
 //sign up to an event (users only)
 

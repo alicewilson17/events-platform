@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { createEvent } from '../api'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import Loading from './Loading'
+import { BeatLoader } from 'react-spinners'
 
 function CreateEvent() {
     const {user, isLoggedIn} = useAuth()
@@ -61,7 +61,7 @@ const handleChange = (event) => {
             //ensure price is set to 0 if event is free
             price: newEvent.is_paid ? newEvent.price : 0.00
         }
-        console.log(eventData)
+
 
         try {
             setFormErrors("")
@@ -81,20 +81,19 @@ const handleChange = (event) => {
                 eventData.is_paid,
                 eventData.img
             );
+            setIsLoading(false)
             console.log("Event created successfully:", createdEvent);
             navigate('/events/createevent/success', {state: {event: createdEvent}})
 
         }
         catch(error) {
+            setIsLoading(false)
             console.error("Error creating event:", error);
         }
     }
 
 const isAdmin = user && user.role === 'admin'
 
-if(isLoading) {
-    return <Loading/>
-}
   return (
       <>
       {isAdmin ? (
@@ -201,7 +200,7 @@ if(isLoading) {
           onChange={handleChange}
         ></input>
         </label>
-        <button type='submit'>Create event</button>
+        <button type='submit' disabled={isLoading}>{isLoading ? <BeatLoader size={10} color="#ffffff" /> : "Create event"}</button>
         </form>
         </div>
        ) : (

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
+import Loading from './Loading'
+import { BeatLoader } from 'react-spinners'
 
 
 
@@ -10,6 +12,7 @@ const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
 const [errorFromAPI, setErrorFromAPI] = useState("") //api errors
 const [formErrors, setFormErrors] = useState("") //errors for form validation
+const [isLoading, setIsLoading] = useState(false)
 const {logIn} = useAuth()
 const navigate = useNavigate()
 const location = useLocation()
@@ -31,8 +34,8 @@ const validateForm = () => {
 
 
 const handleLogIn = async(event) => {
-  event.preventDefault() //prevent form reload
-  const errors = validateForm() //call validate function to validate the inputs
+  event.preventDefault() 
+  const errors = validateForm() 
   try {
     setFormErrors("")
     setErrorFromAPI("") //clear any previous errors
@@ -40,10 +43,13 @@ const handleLogIn = async(event) => {
       setFormErrors(errors)
       return;
     }
- await logIn(email, password) // call the context function
+setIsLoading(true)
+ await logIn(email, password) 
+ setIsLoading(false)
  navigate(from, {replace: true}) //if login successful, redirect to original location
   }
   catch(error) {
+    setIsLoading(false)
     const errorMessage = error.response?.data?.message || 
     error.message || 
     "Something went wrong";
@@ -63,7 +69,7 @@ setErrorFromAPI(errorMessage);
         {formErrors.email && <p style={{color: 'red'}}>{formErrors.email}</p>}
         <input type='password' placeholder='Password' value={password} onChange={(event) => setPassword(event.target.value)}></input>
         {formErrors.password && <p style={{color: 'red'}}>{formErrors.password}</p>}
-        <button type="submit">Log in</button>
+        <button type="submit" disabled={isLoading}>{isLoading ? <BeatLoader size={10} color="#ffffff" /> : "Log in"}</button>
         </form>
         { <p style={{color: 'red'}}>{errorFromAPI}</p>}
         <p>Don't have an account? <Link to={`/auth/signup`}>Sign up</Link></p></div>

@@ -33,10 +33,8 @@ useEffect(() => {
 const handleSignUp=async(user, event) => {
   try{
     if(isLoggedIn) {
-    console.log(user, event)
     const userId = user.user_id
     const eventId = event.event_id
-    console.log(userId, eventId)
     setIsLoading(true)
     await postEventSignUp(userId, eventId)
      navigate(`/events/${eventId}/signupsuccess`, {state : [event]})
@@ -45,6 +43,7 @@ const handleSignUp=async(user, event) => {
     navigate('/auth/login')
   }
 } catch(error) {
+  setIsLoading(false)
   if(error.response && error.response.status === 400)
   {
     setError(error.response.data.msg) //show custom error message
@@ -75,7 +74,7 @@ if(isLoading) {
       <div className='book-section'>
 <h3>{event.is_paid ? `Tickets: £${event.price}`: "This event is free to attend."}</h3>
       <button className='book-btn' onClick={() => handleSignUp(user, event)}>Sign up to event</button>
-      {error && <p>{error}</p>}
+      {error && <p style={{color:'red', marginTop:'1rem', textAlign:'center'}}>{error}</p>}
       </div>
       </div>
       </>

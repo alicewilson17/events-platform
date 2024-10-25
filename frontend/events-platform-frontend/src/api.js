@@ -84,7 +84,6 @@ export const createEvent = async(title, description, date, start_time, end_time,
 
     try {
         const response = await api.post(url, postBody, config)
-        console.log(response.data)
         return response.data
     }
     catch(error) {
@@ -109,7 +108,6 @@ export const getCreatedEvents = async(user_id) => {
 
     try {
         const response = await api.get(url, config)
-        console.log(response.data)
         return response.data
     }
     catch(error) {

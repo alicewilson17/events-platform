@@ -63,6 +63,7 @@ const router = express.Router()
 router.post('/signup', signUp)
 
 //login route
+
 /**
  * @swagger
  * /api/auth/login:

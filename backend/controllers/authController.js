@@ -19,7 +19,7 @@ const hashedPassword = await bcrypt.hash(password, 10)
 //create a new user
 const newUser = await createUser(first_name, last_name, email, hashedPassword, role)
 
-//Generate JWT token - THIS WAS ADDED IN LATER SO TEST THIS/CHECK IF CAUSES ERRRORS
+//Generate JWT token 
 const token = jwt.sign({ userId: newUser.user_id, role: newUser.role}, // payload
     process.env.JWT_SECRET, //secure secret key, from env variable
     {expiresIn: '1h'} // token expiration time)

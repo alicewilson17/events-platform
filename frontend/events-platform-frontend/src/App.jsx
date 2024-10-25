@@ -10,12 +10,14 @@ import SignUpForm from './components/SignUpForm'
 import EventSignUpSuccess from './components/EventSignUpSuccess'
 import CreateEvent from './components/CreateEvent'
 import CreateEventSuccess from './components/CreateEventSuccess'
+import NotFound from './components/NotFound'
 
 function App() {
   
   return (
     <>
     <NavBar/>
+    <div className='main-content'>
      <Routes>
       <Route path = "/" element = {<Home/>} />
       <Route path= "/events" element ={<Events/>} />
@@ -26,8 +28,9 @@ function App() {
       <Route path = "/events/:event_id/signupsuccess" element = {<EventSignUpSuccess/>}/>
       <Route path = "/events/createevent" element={<CreateEvent/>}/>
       <Route path = "/events/createevent/success" element={<CreateEventSuccess/>}/>
-
+      <Route path="*" element={<NotFound/>}/>
      </Routes>
+     </div>
     </>
   )
 }

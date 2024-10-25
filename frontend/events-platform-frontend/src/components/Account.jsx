@@ -56,8 +56,8 @@ if(isLoading) {
         <div className='header-and-button'><h1>Hello, {user.first_name}</h1> <button onClick={logOut}>Log out</button></div><hr></hr>
       {user.role === 'admin' && <div className='admin-created-events'><div className='header-and-button'><h2>Events You're Hosting</h2><button onClick={handleNavigate}>Create event</button></div>
       {adminCreatedEvents.length === 0 ? <p className="no-events-message">You aren't hosting any upcoming events.</p> : 
-      <div className='created-events'>
-        {adminCreatedEvents.map(adminEvent => <EventCard key={adminEvent.event_id} event={adminEvent}/>)}
+      <div className='created-events' >
+        {adminCreatedEvents.map(adminEvent => <div key={adminEvent.event_id}><EventCard  event={adminEvent}/><p style={{fontWeight:'500'}}>{adminEvent.signup_count} attending</p></div>)}
       </div>
       }
       <hr></hr>
@@ -71,9 +71,6 @@ if(isLoading) {
         </div>
       </div>
       </div>
-    //if user is not logged in, display Auth component
-    //if user is logged in, display account details
-
 
   )
 }
