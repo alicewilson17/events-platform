@@ -112,7 +112,7 @@ The server should now be running on http://localhost:9090.
 
 **Start the Frontend Development Server:** Open a terminal in the frontend/events-platform-frontend folder and start the React development server.
 ```
-cd ../frontend
+cd ../frontend/events-platform-frontend
 npm run dev
 ```
 The frontend should now be running on http://localhost:5173.
