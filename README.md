@@ -118,7 +118,7 @@ npm run dev
 The frontend should now be running on http://localhost:5173.
 
 ## Future Improvements
-- Admin-only endpoint: update event
-- Admin-only enpoint: delete event
-- Stripe for secure payment
-- Allow sorting and filtering of events
+- Create an endpoint to allow admins to edit their created events.
+- Create an endpoint to allow admins to delete their created events.
+- Integrate Stripe for secure payment when signing up to paid events.
+- Implement sorting and filtering functionality for the events list.
