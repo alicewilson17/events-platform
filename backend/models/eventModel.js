@@ -12,7 +12,7 @@ exports.fetchEventById = async(event_id) => {
 }
 
 exports.selectAllEvents = async() => {
-    const res = await(db.query(`SELECT * FROM events`))
+    const res = await(db.query(`SELECT * FROM events ORDER BY date asc`))
     return res.rows
 }
 
