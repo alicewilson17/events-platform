@@ -14,7 +14,7 @@ const app = express()
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors());
 
 //log in and sign up routes
 app.use('/api/auth', authRoutes);  // Auth-related routes
