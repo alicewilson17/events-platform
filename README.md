@@ -23,7 +23,7 @@ Password: password123
 
 Description | Link
 --- | ---
-Deployed version of front-end app | INSERT LINK HERE
+Deployed version of front-end app | https://thereshecodes.netlify.app/
 Back-end live API | https://events-platform-ak9d.onrender.com/
 Backend Documentation | https://events-platform-ak9d.onrender.com/api-docs
 
@@ -121,4 +121,4 @@ The frontend should now be running on http://localhost:5173.
 - Create an endpoint to allow admins to edit their created events.
 - Create an endpoint to allow admins to delete their created events.
 - Integrate Stripe for secure payment when signing up to paid events.
-- Implement sorting and filtering functionality for the events list.
+- Allow users to filter the list of events by categories such as location, free vs paid, etc.
