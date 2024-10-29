@@ -24,7 +24,7 @@ function CreateEventSuccess() {
         <p><strong>Date:</strong> {event.event.date.split('T')[0].split('-').reverse().join("/")}</p>
         <p><strong>Time</strong> {event.event.start_time[0] === '0' ? event.event.start_time.slice(1,-3) : event.event.start_time.slice(0,-3)} - {event.event.end_time.slice(0,-3)}</p>
         <p><strong>Location:</strong> {event.event.location}</p>
-        <p><strong>Price: </strong> £{event.event.price > 0 ? event.event.price : "Free"}</p>
+        <p><strong>Price: </strong> {event.event.price > 0 ? `£${event.event.price}` : "Free"}</p>
         <p><strong>Description:</strong> {event.event.description}</p>
        <Link to={`/events/${event.event.event_id}`}><button>View event</button></Link>
         </div>
