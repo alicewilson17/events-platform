@@ -87,7 +87,7 @@ const handleChange = (event) => {
             );
             setIsLoading(false)
             console.log("Event updated successfully:", updatedEvent);
-            navigate('/events/updateevent/success', {state: {event: updatedEvent}})
+            navigate(`/events/${eventData.event_id}/update/success`, {state: {event: updatedEvent}})
 
         }
         catch(error) {

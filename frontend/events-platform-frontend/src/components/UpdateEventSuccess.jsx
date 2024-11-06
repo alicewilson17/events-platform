@@ -7,6 +7,7 @@ function UpdateEventSuccess() {
     const location = useLocation()
     const navigate = useNavigate()
     const {event} = location.state || {}
+    console.log(event.updatedEvent)
 
  if(!event) {
     return <NotFound/>
@@ -20,15 +21,15 @@ function UpdateEventSuccess() {
         </div>
         <div className='event-details'>
         <h2>Event details</h2>
-        <p><strong>Title:</strong> {event.event.title}</p>
-        <p><strong>Date:</strong> {event.event.date.split('T')[0].split('-').reverse().join("/")}</p>
-        <p><strong>Time</strong> {event.event.start_time[0] === '0' ? event.event.start_time.slice(1,-3) : event.event.start_time.slice(0,-3)} - {event.event.end_time.slice(0,-3)}</p>
-        <p><strong>Location:</strong> {event.event.location}</p>
-        <p><strong>Price: </strong> {event.event.price > 0 ? `£${event.event.price}` : "Free"}</p>
-        <p><strong>Description:</strong> {event.event.description}</p>
-       <Link to={`/events/${event.event.event_id}`}><button>View event</button></Link>
+        <p><strong>Title:</strong> {event.updatedEvent.title}</p>
+        <p><strong>Date:</strong> {event.updatedEvent.date.split('T')[0].split('-').reverse().join("/")}</p>
+        <p><strong>Time</strong> {event.updatedEvent.start_time[0] === '0' ? event.updatedEvent.start_time.slice(1,-3) : event.updatedEvent.start_time.slice(0,-3)} - {event.updatedEvent.end_time.slice(0,-3)}</p>
+        <p><strong>Location:</strong> {event.updatedEvent.location}</p>
+        <p><strong>Price: </strong> {event.updatedEvent.price > 0 ? `£${event.updatedEvent.price}` : "Free"}</p>
+        <p><strong>Description:</strong> {event.updatedEvent.description}</p>
+       <Link to={`/events/${event.updatedEvent.event_id}`}><button>View event</button></Link>
         </div>
-       <Link to={`/events/createevent`}></Link> <button className='create-another-event'>Create another event</button>
+<button onClick={() => navigate(`/events/${event.updatedEvent.event_id}/update`, {state: { event: event.updatedEvent }})} className='create-another-event'>Update again</button>
         </div> 
         </div>
   )
