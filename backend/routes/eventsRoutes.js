@@ -4,6 +4,8 @@ const {
   getAllEvents,
   postEvent,
   postSignUpToEvent,
+  updateEvent,
+  deleteEvent,
 } = require("../controllers/eventsController");
 const { adminOnly, verifyToken } = require("../middleware/authMiddleware");
 
@@ -195,6 +197,13 @@ router.post('/:event_id/signup', verifyToken, postSignUpToEvent)
 router.post('/', verifyToken, adminOnly, postEvent)
 
 
+//update event
+
+router.put('/:event_id', verifyToken, adminOnly, updateEvent);
+
+//delete event
+
+router.delete('/:event_id', verifyToken, adminOnly, deleteEvent);
 
 
 module.exports = router;

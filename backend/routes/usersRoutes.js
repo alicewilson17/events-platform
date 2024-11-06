@@ -7,7 +7,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * api/users/{user_id}/signups:
+ * /api/users/{user_id}/signups:
  *   get:
  *     summary: Get signups for a specific user
  *     description: Retrieve all event signups for the logged-in user or for an admin retrieving another user's signups. Only the user or an admin can access this information.

@@ -41,9 +41,18 @@ useEffect(() => {
   }
 }, [user])
 
-const handleNavigate = () => {
+const handleNavCreateEvent = () => {
  navigate('/events/createevent')
 }
+const handleNavUpdateEvent = (event) => {
+  const eventId = event.event_id
+  navigate(`/events/${eventId}/update`, { state: { event } })
+}
+
+const handleDeleteEvent = () => {
+  console.log("clicked")
+}
+
 if (!isLoggedIn) {
   return <LogInForm/>
 }
@@ -54,10 +63,10 @@ if(isLoading) {
     <div className='account'>
       <div className='dashboard'>
         <div className='header-and-button'><h1>Hello, {user.first_name}</h1> <button onClick={logOut}>Log out</button></div><hr></hr>
-      {user.role === 'admin' && <div className='admin-created-events'><div className='header-and-button'><h2>Events You're Hosting</h2><button onClick={handleNavigate}>Create event</button></div>
+      {user.role === 'admin' && <div className='admin-created-events'><div className='header-and-button'><h2>Events You're Hosting</h2><button onClick={handleNavCreateEvent}>Create event</button></div>
       {adminCreatedEvents.length === 0 ? <p className="no-events-message">You aren't hosting any upcoming events.</p> : 
       <div className='created-events' >
-        {adminCreatedEvents.map(adminEvent => <div key={adminEvent.event_id}><EventCard  event={adminEvent}/><p style={{fontWeight:'500'}}>{adminEvent.signup_count} attending</p></div>)}
+        {adminCreatedEvents.map(adminEvent => <div key={adminEvent.event_id}><EventCard  event={adminEvent}/><div className='attendees-and-buttons'><p style={{fontWeight:'500'}}>{adminEvent.signup_count} attending</p><div className='edit-delete-buttons'><img className='edit-button' onClick={() => handleNavUpdateEvent(adminEvent)} src="../../assets/icons/edit.png" alt="edit icon"/><img className='delete-button' onClick={handleDeleteEvent} src="../../assets/icons/delete.png" alt="delete icon"/></div></div></div>)}
       </div>
       }
       <hr></hr>

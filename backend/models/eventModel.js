@@ -31,3 +31,26 @@ exports.signUpToEvent = async(user_id, event_id) => {
     const res = await db.query(`INSERT INTO signups (user_id, event_id) VALUES ($1, $2);`, [user_id, event_id])
     return res.rows[0]
 }
+
+exports.updateEvent = async (eventId, updatedEventData) => {
+    const {title, description, date, start_time, end_time, location, price, is_paid, img} = updatedEventData;
+
+    const res = await db.query(
+        `UPDATE events 
+         SET title = $1, description = $2, date = $3, start_time = $4, end_time = $5, location = $6, price = $7, is_paid = $8, img = $9 
+         WHERE event_id = $10 
+         RETURNING *;`,
+        [title, description, date, start_time, end_time, location, price, is_paid, img, eventId]
+    );
+
+    return res.rows[0];
+};
+
+
+exports.deleteEventById = async (eventId) => {
+    const result = await db.query(
+        `DELETE FROM events WHERE event_id = $1 RETURNING *;`,
+        [eventId]
+    );
+    return result.rows[0];
+};

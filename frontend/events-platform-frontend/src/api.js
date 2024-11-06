@@ -118,3 +118,34 @@ export const getCreatedEvents = async(user_id) => {
         throw error
     }
 }
+
+//update event (admins only)
+export const updateEvent = async(event_id, eventData) => {
+    const url = `/events/${event_id}`
+    const {title, description, date, start_time, end_time, location, price, is_paid, img} = eventData
+const eventDataToSubmit = {title, description, date, start_time, end_time, location, price, is_paid, img}
+    
+console.log(`Full URL: ${api.defaults.baseURL}/events/${event_id}`);
+    const token = localStorage.getItem('token')
+    console.log(token)
+    if (!token) {
+        throw new Error('User is not authenticated.');
+      }
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+
+    try {
+        console.log(eventDataToSubmit)
+        console.log(`Updating event with ID: ${event_id} to include ${eventDataToSubmit}`);
+        const response = await api.put(url, eventDataToSubmit, config)
+        return response.data
+    }
+    catch(error) {
+        if (error.response?.status === 401) {
+            useAuth().logOut()
+            throw new Error('Session expired. Please log in again.')
+        }
+        throw error
+    }
+}

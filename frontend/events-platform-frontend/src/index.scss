@@ -639,6 +639,24 @@ line-height: 3rem;
   }
 }
 
+.attendees-and-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.edit-delete-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.edit-button, .delete-button {
+  border: none;
+  width: 1.2rem;
+  &:hover {
+    cursor: pointer;
+  }
+ 
+}
+
 //not-found
 .not-found {
   margin-top: 10rem;
