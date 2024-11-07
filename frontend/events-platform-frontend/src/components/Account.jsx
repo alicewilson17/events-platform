@@ -59,13 +59,13 @@ function Account() {
       console.log(showConfirmDelete, eventToDelete);
       console.log(`deleting event: ${eventToDelete.event_id}`)
       await deleteEvent(eventToDelete.event_id);
+      console.log('successfully deleted event with id: ', eventToDelete.event_id)
       setDeleted(true); // Mark as deleted to update the popup content
       setAdminCreatedEvents(
         adminCreatedEvents.filter(
           (event) => event.event_id !== eventToDelete.event_id
         )
       ); // Update UI to remove deleted event
-      setShowConfirmDelete(false);
       setEventToDelete(null);
     } catch (error) {
       setDeleted(false)
