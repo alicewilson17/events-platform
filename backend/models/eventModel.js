@@ -32,6 +32,14 @@ exports.signUpToEvent = async(user_id, event_id) => {
     return res.rows[0]
 }
 
+exports.cancelSignup = async (user_id, event_id) => {
+    const res = await db.query(
+      `DELETE FROM signups WHERE user_id = $1 AND event_id = $2 RETURNING *;`,
+      [user_id, event_id]
+    );
+    return res;
+  };
+  
 exports.updateEvent = async (eventId, updatedEventData) => {
     const {title, description, date, start_time, end_time, location, price, is_paid, img} = updatedEventData;
 

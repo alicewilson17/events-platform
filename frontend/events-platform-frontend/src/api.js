@@ -31,6 +31,32 @@ export const postEventSignUp = async (user_id, event_id) => {
     return response.data
 }
 
+// Check if the user is already signed up for the event
+export const checkSignupStatus = async (event_id) => {
+    const token = localStorage.getItem('token');
+    const url = `/events/${event_id}/signupstatus`;
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+    
+    const response = await api.get(url, config);
+    console.log("response=", response.data);
+    return response.data;
+}
+
+// Cancel signup for the event - logged in users only
+export const cancelEventSignup = async (event_id) => {
+    const token = localStorage.getItem('token');
+    const url = `/events/${event_id}/cancel`;  // assuming the backend route for canceling is something like this
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+    
+    const response = await api.delete(url, config);
+    return response.data;
+}
+
+
 //log in
 export const logInUser = async(email, password) => {
     try {

@@ -6,6 +6,7 @@ const {
   checkIfSignupExists,
   updateEvent,
   deleteEventById,
+  cancelSignup
 } = require("../models/eventModel");
 //get all events
 exports.getAllEvents = async (req, res, next) => {
@@ -81,6 +82,24 @@ exports.postEvent = async (req, res, next) => {
   }
 };
 
+// Check if user is signed up to an event
+exports.checkSignupStatus = async (req, res, next) => {
+  const eventId = req.params.event_id;
+  const userId = req.user.userId;
+  try {
+    const existingSignup = await checkIfSignupExists(userId, eventId);
+    if (existingSignup.rowCount > 0) {
+      return res.status(200).json({ msg: "You are already signed up for this event." });
+    } else {
+      return res.status(200).json({ msg: "You are not signed up for this event." });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
 //sign up to an event (users only)
 
 exports.postSignUpToEvent = async (req, res, next) => {
@@ -105,6 +124,22 @@ exports.postSignUpToEvent = async (req, res, next) => {
       .send({
         msg: `Successfully signed up user ${userId} to event ${eventId}`,
       });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Cancel a user's signup for an event
+exports.cancelSignup = async (req, res, next) => {
+  const eventId = req.params.event_id;
+  const userId = req.user.userId;
+  try {
+    // Remove signup from the database
+    const result = await cancelSignup(userId, eventId);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ msg: "No signup found for this event." });
+    }
+    res.status(200).json({ msg: "Signup canceled successfully." });
   } catch (error) {
     next(error);
   }
