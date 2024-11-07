@@ -149,3 +149,29 @@ console.log(`Full URL: ${api.defaults.baseURL}/events/${event_id}`);
         throw error
     }
 }
+
+//delete event (admins only)
+
+export const deleteEvent = async (event_id) => {
+    const url = `/events/${event_id}`
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('User is not authenticated.');
+    }
+
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+
+    try {
+        console.log(`API is attempting to delete event with ID: ${event_id} at the url ${url} with token ${token}`);
+        const response = await api.delete(url, config);
+        return response.data;
+    } catch (error) {
+        if (error.response?.status === 401) {
+            throw new Error('Session expired. Please log in again.');
+        }
+        console.error('Error response:', error.response?.data);
+        throw error;
+    }
+};

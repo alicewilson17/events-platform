@@ -663,3 +663,39 @@ line-height: 3rem;
   text-align: center;
   padding: 2rem;
 }
+
+//confirm delete popup
+
+.confirm-delete-popup {
+  position: fixed; /* Fixes the popup to the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the popup */
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001; /* Ensures it appears above other content */
+  max-width: 300px;
+  width: 90%;
+  text-align: center;
+  p {
+    margin-bottom: 15px;
+  }
+  button {
+    margin: 0 5px;
+    padding: 8px 16px;
+  }
+}
+
+
+
+.overlay {
+  position: fixed; /* Covers the entire viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000; /* Below the popup, but above the rest of the content */
+}
