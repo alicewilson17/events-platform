@@ -28,7 +28,7 @@ function CreateEventSuccess() {
         <p><strong>Description:</strong> {event.event.description}</p>
        <Link to={`/events/${event.event.event_id}`}><button>View event</button></Link>
         </div>
-       <Link to={`/events/createevent`}></Link> <button className='create-another-event'>Create another event</button>
+       <Link className = 'manage-events-button-container' to={`/account`}><button>Manage Events</button></Link> 
         </div> 
         </div>
   )

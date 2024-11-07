@@ -12,6 +12,7 @@ function Account() {
   const [adminCreatedEvents, setAdminCreatedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [isDeleteError, setIsDeleteError] = useState(false);
   const [eventToDelete, setEventToDelete] = useState(null);
   const [deleted, setDeleted] = useState(false);
   const navigate = useNavigate();
@@ -50,25 +51,27 @@ function Account() {
   };
 
   const handleDeleteClick = (event) => {
+    setIsDeleteError(false);
     setShowConfirmDelete(true);
     setEventToDelete(event); // Set the selected event for deletion
   };
 
   const handleConfirmDelete = async () => {
     try {
-      console.log(showConfirmDelete, eventToDelete);
-      console.log(`deleting event: ${eventToDelete.event_id}`)
       await deleteEvent(eventToDelete.event_id);
-      console.log('successfully deleted event with id: ', eventToDelete.event_id)
       setDeleted(true); // Mark as deleted to update the popup content
       setAdminCreatedEvents(
         adminCreatedEvents.filter(
           (event) => event.event_id !== eventToDelete.event_id
-        )
-      ); // Update UI to remove deleted event
+        ))
+        setSignedUpEvents(
+          signedUpEvents.filter(
+            (event) => event.event_id !== eventToDelete.event_id
+          )); // Update UI to remove deleted event
       setEventToDelete(null);
     } catch (error) {
       setDeleted(false)
+      setIsDeleteError(true);
       console.error("Failed to delete event:", error);
     }
   };
@@ -76,6 +79,12 @@ function Account() {
   const handleCancelDelete = () => {
     setShowConfirmDelete(false);
     setEventToDelete(null);
+  };
+
+  const handleClosePopupAfterDelete = () => {
+    setDeleted(false);
+    setShowConfirmDelete(false)
+    setIsDeleteError(false);
   };
 
   if (!isLoggedIn) {
@@ -154,15 +163,21 @@ function Account() {
           {deleted ? (
             <>
               <p>Event deleted.</p>
-              <button onClick={() => setShowConfirmDelete(false)}>Close</button>
+              <button onClick={handleClosePopupAfterDelete}>Close</button>
             </>
-          ) : (
+          ) : ( isDeleteError ? 
+            (<>
+              <p>Error: Event could not be deleted.</p>
+              <button onClick={handleClosePopupAfterDelete}>Close</button>
+            </> )
+          : (
             <>
               <p>Are you sure you want to delete this event?</p>
               <button onClick={handleConfirmDelete}>Yes</button>
               <button onClick={handleCancelDelete}>No</button>
             </>
-          )}
+          ))
+          }
         </div>
       )}
     </div>

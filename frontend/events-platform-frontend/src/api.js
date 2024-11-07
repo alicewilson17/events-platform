@@ -125,9 +125,9 @@ export const updateEvent = async(event_id, eventData) => {
     const {title, description, date, start_time, end_time, location, price, is_paid, img} = eventData
 const eventDataToSubmit = {title, description, date, start_time, end_time, location, price, is_paid, img}
     
-console.log(`Full URL: ${api.defaults.baseURL}/events/${event_id}`);
+
     const token = localStorage.getItem('token')
-    console.log(token)
+
     if (!token) {
         throw new Error('User is not authenticated.');
       }
@@ -136,8 +136,6 @@ console.log(`Full URL: ${api.defaults.baseURL}/events/${event_id}`);
     };
 
     try {
-        console.log(eventDataToSubmit)
-        console.log(`Updating event with ID: ${event_id} to include ${eventDataToSubmit}`);
         const response = await api.put(url, eventDataToSubmit, config)
         return response.data
     }
@@ -164,7 +162,7 @@ export const deleteEvent = async (event_id) => {
     };
 
     try {
-        console.log(`API is attempting to delete event with ID: ${event_id} at the url ${url} with token ${token}`);
+   
         const response = await api.delete(url, config);
         return response.data;
     } catch (error) {

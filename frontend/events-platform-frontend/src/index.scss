@@ -606,12 +606,15 @@ line-height: 3rem;
   width: fit-content;
   margin: auto;
 }
-.create-another-event {
-  width: fit-content;
-  margin:auto;
-  background-color:#6d134b;
-  &:hover {
-   background-color:#98547e
+.manage-events-button-container {
+  margin: auto;
+  button {
+    width: fit-content;
+    margin:auto;
+    background-color:#6d134b;
+    &:hover {
+     background-color:#98547e
+    }
   }
 }
 }
