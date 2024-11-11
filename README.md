@@ -2,7 +2,7 @@
 
 A bespoke events management platform with the aim of supporting and empowering Women in Tech 👩‍💻✨
 
-The platform is designed to help event organisers from Women In Tech communities create and share their events with community members. Users can browse the events on offer, sign up and add events to their calendars.
+The platform is designed to help event organisers from Women In Tech communities create, manage, and share their events with community members. Users can browse the events on offer, sign up and add events to their calendars.
 
 ### Tech Stack
 <b>Frontend:</b> React (using Vite for faster builds) \
@@ -118,7 +118,5 @@ npm run dev
 The frontend should now be running on http://localhost:5173.
 
 ## Future Improvements
-- Create an endpoint to allow admins to edit their created events.
-- Create an endpoint to allow admins to delete their created events.
 - Integrate Stripe for secure payment when signing up to paid events.
 - Allow users to filter the list of events by categories such as location, free vs paid, etc.
