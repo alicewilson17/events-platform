@@ -201,16 +201,199 @@ router.post('/', verifyToken, adminOnly, postEvent)
 
 //update event
 
+/**
+ * @swagger
+ * /{event_id}:
+ *   put:
+ *     summary: Update an existing event
+ *     description: Allows an admin to update the details of a specific event. Only the admin who created the event can make updates.
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: event_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique identifier of the event
+ *       - in: body
+ *         name: event
+ *         description: The updated event data
+ *         required: true
+ *         schema:
+ *           type: object
+ *           required:
+ *             - title
+ *             - description
+ *             - date
+ *             - start_time
+ *             - end_time
+ *             - location
+ *             - price
+ *             - is_paid
+ *             - img
+ *           properties:
+ *             title:
+ *               type: string
+ *               description: Title of the event
+ *             description:
+ *               type: string
+ *               description: Detailed description of the event
+ *             date:
+ *               type: string
+ *               format: date
+ *               description: Date of the event (YYYY-MM-DD)
+ *             start_time:
+ *               type: string
+ *               format: time
+ *               description: Start time of the event (HH:MM)
+ *             end_time:
+ *               type: string
+ *               format: time
+ *               description: End time of the event (HH:MM)
+ *             location:
+ *               type: string
+ *               description: Location where the event will take place
+ *             price:
+ *               type: number
+ *               description: Price of the event ticket
+ *             is_paid:
+ *               type: boolean
+ *               description: Indicates if the event requires payment
+ *             img:
+ *               type: string
+ *               description: URL of the event image
+ *     responses:
+ *       200:
+ *         description: Successfully updated the event
+ *         schema:
+ *           type: object
+ *           properties:
+ *             updatedEvent:
+ *               $ref: '#/definitions/Event'
+ *       400:
+ *         description: Missing or invalid input fields
+ *       403:
+ *         description: Access denied. Only the creating admin can update this event
+ *       500:
+ *         description: Server error
+ */
+
+
 router.put('/:event_id', verifyToken, adminOnly, updateEvent);
 
 //delete event
 
+/**
+ * @swagger
+ * /{event_id}:
+ *   delete:
+ *     summary: Delete an event
+ *     description: Allows an admin to delete a specific event. Only the admin who created the event can delete it.
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: event_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique identifier of the event to be deleted
+ *     responses:
+ *       200:
+ *         description: Successfully deleted the event
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: Confirmation message that the event was deleted
+ *                 deletedEvent:
+ *                   type: object
+ *                   description: The details of the deleted event
+ *                   $ref: '#/definitions/Event'
+ *       403:
+ *         description: Access denied. Only the creating admin can delete this event
+ *       404:
+ *         description: Event not found
+ *       500:
+ *         description: Server error
+ */
+
 router.delete('/:event_id', verifyToken, adminOnly, deleteEvent);
 
 //check if user is signed up for an event
+/**
+ * @swagger
+ * /{event_id}/signupstatus:
+ *   get:
+ *     summary: Check user signup status for an event
+ *     description: Checks whether the logged-in user is signed up for a specific event.
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: event_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique identifier of the event to check signup status for
+ *     responses:
+ *       200:
+ *         description: Signup status message indicating if the user is signed up or not
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: Message indicating whether the user is signed up for the event
+ *       404:
+ *         description: Event not found
+ *       500:
+ *         description: Server error
+ */
+
+
 router.get('/:event_id/signupstatus', verifyToken, checkSignupStatus);
 
 //cancel signup for an event
+
+/**
+ * @swagger
+ * /{event_id}/cancel:
+ *   delete:
+ *     summary: Cancel user signup for an event
+ *     description: Cancels the signup for a specific event for the logged-in user.
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: event_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique identifier of the event to cancel signup for
+ *     responses:
+ *       200:
+ *         description: Signup successfully canceled for the event
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: Message indicating that the signup was canceled successfully
+ *       404:
+ *         description: No signup found for the event or event not found
+ *       500:
+ *         description: Server error
+ */
+
 router.delete('/:event_id/cancel', verifyToken, cancelSignup);
 
 module.exports = router;

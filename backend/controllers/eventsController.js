@@ -180,14 +180,12 @@ exports.updateEvent = async (req, res, next) => {
   }
 
   try {
-    // Find the event to verify ownership
-    console.log(event_id)
     const event = await fetchEventById(event_id);
     // Check if the logged-in admin is the creator of the event
     if (event.created_by !== req.user.userId) {
       return res
         .status(403)
-        .json({ msg: "You are not authorized to update this event." });
+        .json({ msg: "You are not authorised to update this event." });
     }
 
     const updatedEvent = await updateEvent(event_id, {
@@ -224,7 +222,7 @@ exports.deleteEvent = async (req, res, next) => {
     if (event.created_by !== req.user.userId) {
       return res
         .status(403)
-        .json({ msg: "You are not authorized to delete this event." });
+        .json({ msg: "You are not authorised to delete this event." });
     }
 
     // Delete the event

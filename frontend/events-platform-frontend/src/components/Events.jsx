@@ -21,18 +21,20 @@ function Events() {
 if(isLoading) {
   return <Loading/>
 }
-  return (
-    <div className='events-container'>
-   <h2 className='events-header'>What's On</h2>
-    <div className='events'>
-         {events.map((event)=> { 
-          
-          return <EventCard key={event.event_id} event={event}/>
-
-        })}
-    </div>
-    </div>
-  )
+return (
+  <section className='events-container' aria-labelledby="events-header">
+    <header>
+      <h2 id="events-header" className='events-header'>What's On</h2>
+    </header>
+    <ul className='events'>
+      {events.map((event) => (
+        <li key={event.event_id}>
+          <EventCard event={event} />
+        </li>
+      ))}
+    </ul>
+  </section>
+);
 }
 
 export default Events

@@ -59,12 +59,12 @@ function UpdateEvent() {
   // Scroll to the first error label when errors update
   useEffect(() => {
     const navbarHeight = document.querySelector(".navbar").offsetHeight;
-    console.log(navbarHeight, "navbarheight");
+
 
     for (const field in formErrors) {
       if (formErrors[field] && inputRefs[field]?.current) {
         const labelField = inputRefs[field].current;
-        console.log(labelField);
+
 
         if (!isInViewport(labelField, navbarHeight)) {
           const absoluteTop = labelField.offsetTop; // Get the absolute top position

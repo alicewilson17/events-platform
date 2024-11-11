@@ -670,15 +670,15 @@ line-height: 3rem;
 //confirm delete popup
 
 .confirm-delete-popup {
-  position: fixed; /* Fixes the popup to the viewport */
+  position: fixed; 
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centers the popup */
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1001; /* Ensures it appears above other content */
+  z-index: 1001; 
   max-width: 300px;
   width: 90%;
   text-align: center;

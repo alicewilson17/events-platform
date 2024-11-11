@@ -40,7 +40,6 @@ export const checkSignupStatus = async (event_id) => {
     };
     
     const response = await api.get(url, config);
-    console.log("response=", response.data);
     return response.data;
 }
 
