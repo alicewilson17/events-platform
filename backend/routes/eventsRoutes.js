@@ -303,8 +303,6 @@ router.post('/', verifyToken, adminOnly, postEvent)
  *       500:
  *         description: Server error
  */
-
-
 router.put('/:event_id', verifyToken, adminOnly, updateEvent);
 
 //delete event
@@ -367,7 +365,6 @@ router.put('/:event_id', verifyToken, adminOnly, updateEvent);
  *       500:
  *         description: Server error
  */
-
 router.delete('/:event_id', verifyToken, adminOnly, deleteEvent);
 
 //check if user is signed up for an event
