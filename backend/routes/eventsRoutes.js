@@ -355,7 +355,7 @@ router.delete('/:event_id', verifyToken, adminOnly, deleteEvent);
 //check if user is signed up for an event
 /**
  * @swagger
- * api/events/{event_id}/signupstatus:
+ * /api/events/{event_id}/signupstatus:
  *   get:
  *     summary: Check user signup status for an event
  *     description: Checks whether the logged-in user is signed up for a specific event.
@@ -392,7 +392,7 @@ router.get('/:event_id/signupstatus', verifyToken, checkSignupStatus);
 
 /**
  * @swagger
- * api/events/{event_id}/cancel:
+ * /api/events/{event_id}/cancel:
  *   delete:
  *     summary: Cancel user signup for an event
  *     description: Cancels the signup for a specific event for the logged-in user.
