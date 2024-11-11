@@ -266,11 +266,36 @@ router.post('/', verifyToken, adminOnly, postEvent)
  *     responses:
  *       200:
  *         description: Successfully updated the event
- *         schema:
- *           type: object
- *           properties:
- *             updatedEvent:
- *               $ref: '#/definitions/Event'
+ *         content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            updatedEvent:
+              type: object
+              properties:
+                event_id:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                date:
+                  type: string
+                  format: date
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                location:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                is_paid:
+                  type: boolean
+                img:
+                  type: string
  *       400:
  *         description: Missing or invalid input fields
  *       403:
@@ -303,17 +328,38 @@ router.put('/:event_id', verifyToken, adminOnly, updateEvent);
  *       200:
  *         description: Successfully deleted the event
  *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                   description: Confirmation message that the event was deleted
- *                 deletedEvent:
- *                   type: object
- *                   description: The details of the deleted event
- *                   $ref: '#/definitions/Event'
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: string
+                  example: "Event deleted successfully"
+                deletedEvent:
+                  type: object
+                  properties:
+                    event_id:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    date:
+                      type: string
+                      format: date
+                    start_time:
+                      type: string
+                    end_time:
+                      type: string
+                    location:
+                      type: string
+                    price:
+                      type: number
+                      format: float
+                    is_paid:
+                      type: boolean
+                    img:
+                      type: string
  *       403:
  *         description: Access denied. Only the creating admin can delete this event
  *       404:

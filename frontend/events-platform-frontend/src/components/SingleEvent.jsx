@@ -31,6 +31,8 @@ useEffect(() => {
  // Check if the user is already signed up to the event
  if (isLoggedIn) {
   checkIfUserIsSignedUp(event.event_id)
+} else {
+  setIsSignupStatusLoading(false) // if not logged in, no need to check signup status
 }
 })
 .catch((error) => {
@@ -111,11 +113,13 @@ const handleSignUp = async () => {
           {isSignupStatusLoading ? (
       <p style={{marginTop: '1rem'}}>Checking signup status...</p>
     ) : (
-      !isSignedUp ? (
+      !isLoggedIn ? (
+        <button className='book-btn' onClick={handleSignUp}>Sign up to event</button>
+      ) : !isSignedUp ? (
         <button className='book-btn' onClick={handleSignUp}>Sign up to event</button>
       ) : (
         <>
-          <p style={{marginTop: '1rem'}}>You are already signed up for this event.</p>
+          <p style={{ marginTop: '1rem' }}>You are already signed up for this event.</p>
           <button className='book-btn' onClick={handleCancelClick}>Cancel Signup</button>
           {isPopupVisible && (
             <div className="overlay">
