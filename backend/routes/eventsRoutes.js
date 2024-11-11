@@ -199,11 +199,10 @@ router.post('/:event_id/signup', verifyToken, postSignUpToEvent)
 router.post('/', verifyToken, adminOnly, postEvent)
 
 
-//update event
-
+// Update event
 /**
  * @swagger
- * /{event_id}:
+ * /api/events/{event_id}:
  *   put:
  *     summary: Update an existing event
  *     description: Allows an admin to update the details of a specific event. Only the admin who created the event can make updates.
@@ -267,35 +266,46 @@ router.post('/', verifyToken, adminOnly, postEvent)
  *       200:
  *         description: Successfully updated the event
  *         content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            updatedEvent:
-              type: object
-              properties:
-                event_id:
-                  type: string
-                title:
-                  type: string
-                description:
-                  type: string
-                date:
-                  type: string
-                  format: date
-                start_time:
-                  type: string
-                end_time:
-                  type: string
-                location:
-                  type: string
-                price:
-                  type: number
-                  format: float
-                is_paid:
-                  type: boolean
-                img:
-                  type: string
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 updatedEvent:
+ *                   type: object
+ *                   properties:
+ *                     event_id:
+ *                       type: string
+ *                       description: Unique identifier for the event
+ *                     title:
+ *                       type: string
+ *                       description: Title of the event
+ *                     description:
+ *                       type: string
+ *                       description: Detailed description of the event
+ *                     date:
+ *                       type: string
+ *                       format: date
+ *                       description: Date of the event
+ *                     start_time:
+ *                       type: string
+ *                       format: time
+ *                       description: Start time of the event
+ *                     end_time:
+ *                       type: string
+ *                       format: time
+ *                       description: End time of the event
+ *                     location:
+ *                       type: string
+ *                       description: Event location
+ *                     price:
+ *                       type: number
+ *                       description: Price of the event ticket
+ *                     is_paid:
+ *                       type: boolean
+ *                       description: Indicates if the event requires payment
+ *                     img:
+ *                       type: string
+ *                       description: URL of the event image
  *       400:
  *         description: Missing or invalid input fields
  *       403:
@@ -309,7 +319,7 @@ router.put('/:event_id', verifyToken, adminOnly, updateEvent);
 
 /**
  * @swagger
- * /{event_id}:
+ * /api/events/{event_id}:
  *   delete:
  *     summary: Delete an event
  *     description: Allows an admin to delete a specific event. Only the admin who created the event can delete it.
@@ -324,40 +334,15 @@ router.put('/:event_id', verifyToken, adminOnly, updateEvent);
  *         description: The unique identifier of the event to be deleted
  *     responses:
  *       200:
- *         description: Successfully deleted the event
+ *         description: Event deleted successfully
  *         content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                msg:
-                  type: string
-                  example: "Event deleted successfully"
-                deletedEvent:
-                  type: object
-                  properties:
-                    event_id:
-                      type: string
-                    title:
-                      type: string
-                    description:
-                      type: string
-                    date:
-                      type: string
-                      format: date
-                    start_time:
-                      type: string
-                    end_time:
-                      type: string
-                    location:
-                      type: string
-                    price:
-                      type: number
-                      format: float
-                    is_paid:
-                      type: boolean
-                    img:
-                      type: string
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   description: Message indicating that the event was deleted successfully
  *       403:
  *         description: Access denied. Only the creating admin can delete this event
  *       404:
@@ -370,7 +355,7 @@ router.delete('/:event_id', verifyToken, adminOnly, deleteEvent);
 //check if user is signed up for an event
 /**
  * @swagger
- * /{event_id}/signupstatus:
+ * api/events/{event_id}/signupstatus:
  *   get:
  *     summary: Check user signup status for an event
  *     description: Checks whether the logged-in user is signed up for a specific event.
@@ -407,7 +392,7 @@ router.get('/:event_id/signupstatus', verifyToken, checkSignupStatus);
 
 /**
  * @swagger
- * /{event_id}/cancel:
+ * api/events/{event_id}/cancel:
  *   delete:
  *     summary: Cancel user signup for an event
  *     description: Cancels the signup for a specific event for the logged-in user.
